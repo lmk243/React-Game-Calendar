@@ -17,7 +17,7 @@ import ProgressBar from 'react-progress-bar-battlenet-style';
 var DatePicker = require('react-datepicker');
 var moment = require('moment');
 
-var myStorage = localStorage.length==0 ? [] : JSON.parse(localStorage.getItem('eventsList'));
+var myStorage = localStorage.getItem('eventsList')==null ? [] : JSON.parse(localStorage.getItem('eventsList'));
 var myFaves = localStorage.getItem('favesList')==null ? [] : JSON.parse(localStorage.getItem('favesList'));
 
 var d = new Date();
@@ -120,12 +120,13 @@ class Favorites extends React.Component {
             classes: '',
             classesList : '',
             drawerClass: 'closed',
-            games: ['Elder Scrolls Online', 'Smite']
+            games: myFaves
         };
         this.handleClickView = this.handleClickView.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.checkInput = this.checkInput.bind(this);
         this.closeDrawer = this.closeDrawer.bind(this);
+        this.deleteFavorites = this.deleteFavorites.bind(this);
     }
     
     checkInput() {
@@ -137,11 +138,28 @@ class Favorites extends React.Component {
     }
     
     handleClick() {
-        var title = ReactDOM.findDOMNode(this.refs.name).value; 
+        var game = ReactDOM.findDOMNode(this.refs.faveName).value; 
+        
+        var arr = this.state.games;
+        
+        arr.push(game);
+        
+        this.setState({
+            games: arr
+        });
+        
+        localStorage.setItem( 'favesList', JSON.stringify(this.state.games));  
+        
+        ReactDOM.findDOMNode(this.refs.faveName).value = "";
     }
     
     handleClickView() {
         this.setState({drawerClass: 'open animated slideInUp'});
+    }
+    
+    deleteFavorites() {
+        delete localStorage['favesList'];
+        window.location.reload();
     }
     
     closeDrawer() {
@@ -154,8 +172,13 @@ class Favorites extends React.Component {
             <h3>Forgetting Something?</h3>
             <p>Know there's an event coming up but can't remember for what game?  Create a list of favorites.  Perhaps that'll jump start your memory.</p>            
 
+            <input type="text" ref="faveName" className="faveName" placeholder="Favorite" onChange={this.checkInput} />
             <div className="faveButtons">
-                <button onClick={this.handleClickView} className={this.state.classesList}>View Favorites</button>
+            <button onClick={this.handleClick} disabled={this.state.disabled} className={this.state.classes}>
+                <Glyphicon glyph="plus" /> Add Favorite
+                </button>
+            <button onClick={this.deleteFavorites} className="deleteBtn"><Icon name='warning' /> Delete Favorites</button>
+                <button onClick={this.handleClickView} className={this.state.classesList}><Glyphicon glyph="eye-open" /> View Favorites</button>
             </div>
             
             <div id="drawer" className={this.state.drawerClass}>
@@ -335,6 +358,7 @@ constructor(props) {
             };
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
+    
     }
     
     close() {
@@ -343,7 +367,7 @@ constructor(props) {
       }
 
     open() {
-        localStorage.clear();
+        delete localStorage['eventsList'];
         this.setState({ showModal: true });
     }
     
@@ -378,18 +402,14 @@ class Features extends React.Component {
             <div className="new">
                 <h3>New Features</h3>
                 <ul>
+                        <li>Wire favorites into localStorage and delete functionality <Label bsStyle="success">New</Label></li>
                         <li>Future Events Percentages and Summary <Label bsStyle="success">New</Label></li>
-                        <li>Date Picker Support for Firefox <Label bsStyle="success">New</Label></li>
-                        <li>Remove Single Event <Label bsStyle="success">New</Label></li>
-                        <li>Mobile Option <Label bsStyle="success">New</Label></li>
-                        <li>Event Descriptions <Label bsStyle="success">New</Label></li>
-                        <li>Event Hover States <Label bsStyle="success">New</Label></li>
                 </ul>
             </div>
             <div className="upcoming">
                 <h3>Upcoming Features</h3>
                     <ul>                      
-                        <li>Wire favorites into localStorage and delete functionality <Label bsStyle="default">To Do</Label></li>
+                        <li>TBA <Label bsStyle="default">To Do</Label></li>
                     </ul>
             </div>
         <div className="bugs">

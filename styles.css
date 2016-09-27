@@ -98,6 +98,10 @@ body {
     transition: top 10s;
 }
 
+.deleteBtn {
+    width: 200px;
+}
+
 .ReactTabs__TabPanel {
     background: rgba(255,255,255,.7);
     padding: 15px;
@@ -421,7 +425,7 @@ h3 {
 }
 
 #reset:hover:before {
-    content:"Are You Sure?"
+    content:"Are You Sure?";
 }
 
 .modal-content {
@@ -682,6 +686,14 @@ input {
 .faveForm button {
     background-color: transparent;
     display: inline-block;
+    margin-right: 10px;
+}
+
+.faveForm input {
+    width: 300px;
+    display: block;
+    margin: 0 auto 20px;
+    background: transparent;
 }
 
 .faveForm button:disabled {
@@ -692,8 +704,9 @@ input {
 }
 
 .faveForm .faveButtons {
-    width: 165px;
+    width: 575px;
     margin: 0 auto;
+    display: block;
 }
 
 .progress__text {
