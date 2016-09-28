@@ -233,35 +233,35 @@ input:-ms-input-placeholder {
 }
 
 .pcImg {
-    background: url(img/pc.svg) top center no-repeat;
-    width: 120px;
+    background: url(img/pc.jpg) top center no-repeat;
+    width: 150px;
     height: 75px;
-    background-size: 85%;
+    background-size: 75%;
 }
 
 .xboxImg {
-    background: url(img/xbox.svg) top center no-repeat;
+    background: url(img/xbox.jpg) top center no-repeat;
     width: 150px;
     height: 75px;
     background-size: 75%;
 }
 
 .ps4Img {
-    background: url(img/ps4.svg) top center no-repeat;
+    background: url(img/ps4.jpg) top center no-repeat;
     width: 150px;
     height: 75px;
     background-size: 75%;
 }
 
 .mobileImg {
-    background: url(img/mobile.svg) top center no-repeat;
-    width: 100px;
+    background: url(img/mobile.jpg) top center no-repeat;
+    width: 150px;
     height: 75px;
     background-size: 75%;
 }
 
 .devices {
-    height: 100px;
+    height: 75px;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
@@ -271,6 +271,7 @@ input:-ms-input-placeholder {
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
+    background: black;
 }
 
 .devices div {
