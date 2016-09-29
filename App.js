@@ -38,7 +38,8 @@ class Addition extends React.Component {
             description: 'No Description',
             eventClasses: '',
             disabled: true,
-            classes: ''
+            classes: '',
+            image: 'img/spacer.gif'
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleChangeStart = this.handleChangeStart.bind(this);
@@ -72,7 +73,13 @@ class Addition extends React.Component {
         } else {
             var description = ReactDOM.findDOMNode(this.refs.description).value;
         }
-            this.props.addEventHandler(title, start, end, description, eventClasses);        
+        
+        if (ReactDOM.findDOMNode(this.refs.image).value.length == 0) {
+            var image = this.state.image;
+        } else {
+            var image = ReactDOM.findDOMNode(this.refs.image).value;
+        }
+            this.props.addEventHandler(title, start, end, description, image, eventClasses);        
     }
     
     render() {
@@ -96,6 +103,9 @@ class Addition extends React.Component {
             
                     <input type="text" ref="description" className="eventDesc" placeholder="Enter a Description (Optional)" />
             
+                    <input type="text" ref="image" className="eventDesc" placeholder="Image URL (Optional)" />
+                    <p>Only supports hosted images.  No local file select. Ex: http://site.com/image.jpg</p>
+            
                 </div>
             
                 <button onClick={this.handleClick} disabled={this.state.disabled} className={this.state.classes}>
@@ -114,9 +124,16 @@ class Favorites extends React.Component {
     
     constructor(props) {
         super(props);
+        
+        if (localStorage.favesList == undefined) {
+            var faveDisabled = true;
+        } else {
+            var faveDisabled = false;
+        }
+        
         this.state = {
             disabled: true,
-            disabledList: true,
+            disabledList: faveDisabled,
             classes: '',
             classesList : '',
             drawerClass: 'closed',
@@ -145,7 +162,9 @@ class Favorites extends React.Component {
         arr.push(game);
         
         this.setState({
-            games: arr
+            games: arr,
+            disabledList: false,
+            classesList: 'animated rubberBand'
         });
         
         localStorage.setItem( 'favesList', JSON.stringify(this.state.games));  
@@ -170,15 +189,15 @@ class Favorites extends React.Component {
         return (
             <div className="faveForm">
             <h3>Forgetting Something?</h3>
-            <p>Know there's an event coming up but can't remember for what game?  Create a list of favorites.  Perhaps that'll jump start your memory.</p>            
+            <p>Know there's an event coming up but can't remember for what game?  Create a list of favorites.  Perhaps that'll jump start your memory.  Recommended number of entries: 16 or less</p>            
 
             <input type="text" ref="faveName" className="faveName" placeholder="Favorite" onChange={this.checkInput} />
             <div className="faveButtons">
             <button onClick={this.handleClick} disabled={this.state.disabled} className={this.state.classes}>
                 <Glyphicon glyph="plus" /> Add Favorite
                 </button>
-            <button onClick={this.deleteFavorites} className="deleteBtn"><Icon name='warning' /> Delete Favorites</button>
-                <button onClick={this.handleClickView} className={this.state.classesList}><Glyphicon glyph="eye-open" /> View Favorites</button>
+            <button onClick={this.deleteFavorites} className={this.state.classesList} disabled={this.state.disabledList}><Icon name='warning' /> Delete Favorites</button>
+                <button onClick={this.handleClickView} className={this.state.classesList} disabled={this.state.disabledList}><Glyphicon glyph="eye-open" /> View Favorites</button>
             </div>
             
             <div id="drawer" className={this.state.drawerClass}>
@@ -203,6 +222,7 @@ class Summary extends React.Component {
         super(props);
         var now = moment(new Date()).format("YYYY-MM-DD");
         let eventList = [];
+        let imageList = [];
         for (let i = 0; i < myStorage.length; i++) {
             if(now <= myStorage[i].start) {
                 var yr1   = parseInt(myStorage[i].start.substring(0,4));
@@ -280,6 +300,8 @@ class Summary extends React.Component {
                 eventList.push("Starts: " + newDate + " - " + wholePart + " and approx. " + decimalPart + " left");
                 eventList.push("Platform: " + myStorage[i].eventClasses.toUpperCase());
                 eventList.push(myStorage[i].description);
+                
+                imageList.push(myStorage[i].image);
             }
         }
         
@@ -290,8 +312,10 @@ class Summary extends React.Component {
         };
         
         this.state = {
-            events: eventList
+            events: eventList,
+            images: imageList
         };
+        
     }
     
     render() {
@@ -301,7 +325,10 @@ class Summary extends React.Component {
                     {this.state.events.map(function(event, index){
                         return <li key={index} className={index}>{event}</li>;
                     })}
-                </ul>                   
+                </ul>  
+                    {this.state.images.map(function(image, index){
+                        return <div className="imageContainer"><img src={image} key={index} className="eventImage" /></div>;
+                    })}
             </div>
         );
     }
@@ -353,8 +380,16 @@ class Reset extends React.Component {
     
 constructor(props) {
         super(props);
+    
+        if (localStorage.eventsList == undefined) {
+            var eventsDisabled = true;
+        } else {
+            var eventsDisabled = false;
+        }
+    
         this.state = {
-                showModal: false
+                showModal: false,
+                disabled: eventsDisabled
             };
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
@@ -374,7 +409,7 @@ constructor(props) {
   render() {
     return (
             <div>
-        <button type="button" id="reset" onClick={this.open}><span><Icon name='warning' /> Clear Calendar</span></button>
+        <button type="button" id="reset" onClick={this.open} disabled={this.state.disabled}><span><Icon name='warning' /> Clear Calendar</span></button>
         
         
         <Modal show={this.state.showModal} bsSize="small" onHide={this.close}>          
@@ -649,7 +684,7 @@ class App extends React.Component {
     }
     
     
-    addEvent(title, start, end, description, eventClasses) {
+    addEvent(title, start, end, description, image, eventClasses) {
         
         var arr = this.state.list;
         
@@ -658,6 +693,7 @@ class App extends React.Component {
             start: start,
             end: end,
             description: description,
+            image: image,
             eventClasses: eventClasses
         });
         
@@ -730,7 +766,7 @@ class App extends React.Component {
                     <TabPanel>
                             <div className="tabsIntro animated slideInLeft">
                                 <p className="eventsCount"><u>Your number of upcoming events is</u>: <strong>{this.state.total}</strong></p>
-                            <p>Use the other tabs to find out the distribution of these upcoming events per platform as well as a summary list containing each.</p>
+                            <p>Use the other tabs to find out the distribution of these upcoming events per platform as well as a summary list/image (if applicable) containing each.</p>
                             </div>
                     </TabPanel>
 					<TabPanel>

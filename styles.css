@@ -33,7 +33,7 @@ body {
 }
 
 .Games {
-    height: 100px;
+    height: 150px;
     width: 90%;
     margin: 0 auto 10px;
     padding: 0;
@@ -41,9 +41,9 @@ body {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-justify-content: space-around;
+    -webkit-justify-content: space-between;
         -ms-flex-pack: distribute;
-            justify-content: space-around;
+            justify-content: space-between;
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
@@ -53,7 +53,7 @@ body {
 }
 
 .Games li {
-    width: 170px;
+    width: 164px;
     font-size: 15px;
     font-family: 'Play', sans-serif;
     text-align: center;
@@ -98,13 +98,9 @@ body {
     transition: top 10s;
 }
 
-.deleteBtn {
-    width: 200px;
-}
-
 .ReactTabs__TabPanel {
     background: rgba(255,255,255,.7);
-    padding: 15px;
+    padding: 15px 15px 5px;
     overflow: hidden;
 }
 
@@ -162,12 +158,45 @@ body {
 .Summary ul {
     list-style-type: none;
     font-family: 'Play', sans-serif;
-    margin-top: 30px;
+    margin-top: 2px;
+    width: 520px;
+    float: left;
+    padding-left: 0px;
+    border-left: 1px solid rgba(0, 0, 0, .5);
+    border-top: 1px solid rgba(0, 0, 0, .5);
+}
+
+.Summary ul li:last-of-type {
+    margin-bottom: 0 !important;
+}
+
+.imageContainer {
+    clear: right;
+    width: 200px;
+    height: 100px;
+    float: right;
+    border-bottom: 1px solid rgba(0, 0, 0, .5);
+    border-right: 1px solid rgba(0, 0, 0, .5);
+}
+
+.imageContainer:first-of-type {
+    border-top: 1px solid rgba(0, 0, 0, .5);
+    height: 99px;
+    margin-top: 2px;
+}
+
+.eventImage {
+    max-width: 200px;
+    max-height: 100px;
+    margin: 0 auto;
+    display: block;
 }
 
 .Summary ul li:nth-child(4n+4) {  
-    margin-bottom: 30px;
+    padding-bottom: 21px;
+    margin-bottom: 2px;
     line-height: 13px;
+    border-bottom: 1px solid rgba(0, 0, 0, .5);
 }
 
 .Summary ul li:nth-child(4n+1) {  
@@ -429,6 +458,19 @@ h3 {
     content:"Are You Sure?";
 }
 
+#reset:disabled:hover span {
+    display: block;
+}
+
+#reset:disabled:hover:before, #reset:disabled:hover, #reset:disabled {
+    content: none !important;
+    background: #F5F5F5 !important;
+    color: #e0dede;
+    border: 1px solid #e0dede;
+    opacity: .4;
+    color: #333;
+}
+
 .modal-content {
     border-radius: 0px;
     text-align: center;
@@ -658,6 +700,10 @@ select {
     max-width: 750px;
 }
 
+.inputs p {
+    font-family: 'Play', sans-serif;
+}
+
 .eventDesc {
     width: 750px;
     margin-top: 15px;
@@ -691,7 +737,7 @@ input {
 }
 
 .faveForm input {
-    width: 300px;
+    width: 425px;
     display: block;
     margin: 0 auto 20px;
     background: transparent;
