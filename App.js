@@ -201,6 +201,7 @@ class Favorites extends React.Component {
             </div>
             
             <div id="drawer" className={this.state.drawerClass}>
+            <h5>My Favorites</h5>
             <ul className="Games">
                     {this.state.games.map(function(game, index){
                         return <li key={index} className={index}>{game}</li>;
@@ -288,7 +289,11 @@ class Summary extends React.Component {
                     decimalPart = "Error";
                 }
                 
-                if (wholePart > 1) {
+                if (wholePart < 1) {
+                    decimalPart = "0 hours";
+                }
+                
+                if (wholePart > 1 || wholePart < 1) {
                     wholePart = wholePart + " days"
                 } else {
                     wholePart = wholePart + " day"
@@ -309,26 +314,30 @@ class Summary extends React.Component {
             eventList.push("There Are No Upcoming Events");
             eventList.push("", "");
             eventList.push("Add an event for today or in the future to see it here.");
+            var isEmpty = 'empty'
         };
         
         this.state = {
             events: eventList,
-            images: imageList
+            images: imageList,
+            classNames: isEmpty
         };
         
     }
     
     render() {
         return (
-            <div className="Summary animated slideInLeft">
-                <ul className="Names">
-                    {this.state.events.map(function(event, index){
-                        return <li key={index} className={index}>{event}</li>;
-                    })}
-                </ul>  
-                    {this.state.images.map(function(image, index){
-                        return <div className="imageContainer"><img src={image} key={index} className="eventImage" /></div>;
-                    })}
+            <div className={this.state.classNames}>
+                <div className="Summary animated slideInLeft">
+                    <ul className="Names">
+                        {this.state.events.map(function(event, index){
+                            return <li key={index} className={index}>{event}</li>;
+                        })}
+                    </ul>  
+                        {this.state.images.map(function(image, index){
+                            return <div className="imageContainer"><img src={image} key={index} className="eventImage" /></div>;
+                        })}
+                </div>
             </div>
         );
     }

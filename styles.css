@@ -33,7 +33,7 @@ body {
 }
 
 .Games {
-    height: 150px;
+    height: 110px;
     width: 90%;
     margin: 0 auto 10px;
     padding: 0;
@@ -100,7 +100,7 @@ body {
 
 .ReactTabs__TabPanel {
     background: rgba(255,255,255,.7);
-    padding: 15px 15px 5px;
+    padding: 15px;
     overflow: hidden;
 }
 
@@ -170,6 +170,10 @@ body {
     margin-bottom: 0 !important;
 }
 
+.Summary ul li {
+    padding-left: 15px;
+}
+
 .imageContainer {
     clear: right;
     width: 200px;
@@ -188,7 +192,7 @@ body {
 .eventImage {
     max-width: 200px;
     max-height: 100px;
-    margin: 0 auto;
+    margin: 2px auto 0px;
     display: block;
 }
 
@@ -514,6 +518,12 @@ h2 {
     border-bottom: 2px solid black;
 }
 
+h5 {
+    font-family: 'orbitronregular';
+    border-bottom: 1px solid #fff;
+    font-size: 20px;
+}
+
 .flexColumn {
     font-family: 'orbitronregular';
     font-size: 13px;
@@ -528,6 +538,10 @@ h2 {
 .today .date {
     background: black;
     color: rgba(255,255,255,.7);
+}
+
+.empty .Names, .empty ul li:nth-child(4n+4) {
+    border: none;
 }
 
 .date {
@@ -788,14 +802,14 @@ button:disabled {
 .progress__text {
     text-indent: -76px;
     font-family: 'orbitronregular' !important;
-    color: rgba(255, 255, 255, .9) !important;
+    color: rgba(255, 255, 255, .7) !important;
     width: 55px;
     overflow: hidden;
 }
 
 .fraction {
     font-family: 'orbitronregular' !important;
-    color: rgba(255, 255, 255, .9) !important;
+    color: rgba(255, 255, 255, .7) !important;
     font-size: 12px;
     position: absolute;
     left: 45px;
@@ -806,6 +820,10 @@ button:disabled {
 
 .percentages .pcBar, .percentages .xBar, .percentages .psBar, .percentages .mBar {
     position: relative;
+}
+
+.eventName {
+    width: 190px;
 }
 
 .progress {
