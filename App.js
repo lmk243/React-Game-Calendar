@@ -224,6 +224,7 @@ class Summary extends React.Component {
         var now = moment(new Date()).format("YYYY-MM-DD");
         let eventList = [];
         let imageList = [];
+        var warning = "";
         for (let i = 0; i < myStorage.length; i++) {
             if(now <= myStorage[i].start) {
                 var yr1   = parseInt(myStorage[i].start.substring(0,4));
@@ -289,8 +290,10 @@ class Summary extends React.Component {
                     decimalPart = "Error";
                 }
                 
-                if (wholePart < 1) {
-                    decimalPart = "0 hours";
+                if(myStorage[i].title.toLowerCase().indexOf(" end") >= 0 || myStorage[i].title.toLowerCase().indexOf(" ends") >= 0 || myStorage[i].title.toLowerCase().indexOf(" ending") >= 0) {
+                    if (wholePart <= 1 ) {
+                        warning = "HURRY!  This event ends soon!";
+                    }
                 }
                 
                 if (wholePart > 1 || wholePart < 1) {
@@ -304,10 +307,11 @@ class Summary extends React.Component {
                 eventList.push(myStorage[i].title);
                 eventList.push("Starts: " + newDate + " - " + wholePart + " and approx. " + decimalPart + " left");
                 eventList.push("Platform: " + myStorage[i].eventClasses.toUpperCase());
-                eventList.push(myStorage[i].description);
+                eventList.push(myStorage[i].description + " " + warning);
                 
                 imageList.push(myStorage[i].image);
             }
+            
         }
         
         if(eventList.length == 0) {
@@ -628,6 +632,7 @@ class App extends React.Component {
             showModal2: false,
             overlayTitle: null,
             overlayDesc: null,
+            overlayImg: null,
             popoverTarget: null,
             list: myStorage,
             month: Number(d.getMonth()),
@@ -650,7 +655,8 @@ class App extends React.Component {
             showPopover: true,
             popoverTarget: () => ReactDOM.findDOMNode(target),
                 overlayTitle: eventData.title,
-                overlayDesc: eventData.description
+                overlayDesc: eventData.description,
+                overlayImg: eventData.image
         });
     }
 
@@ -723,9 +729,11 @@ class App extends React.Component {
         
     }
 
-    render() {       
+    render() {
         
+        var divStyle = { backgroundImage: 'url(' + this.state.overlayImg + ')' };
         return (
+            
             <div>
             
             <Modal show={this.state.showModal} bsSize="small" onHide={this.close}>          
@@ -754,6 +762,7 @@ class App extends React.Component {
                     <Popover id="event">
                     <div>
                         <h1>{this.state.overlayTitle}</h1>
+                        <div className="eventAvatar" style={divStyle}></div>
                         <p>{this.state.overlayDesc}</p>
                     </div>
                     </Popover>

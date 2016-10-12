@@ -192,7 +192,7 @@ body {
 .eventImage {
     max-width: 200px;
     max-height: 100px;
-    margin: 2px auto 0px;
+    margin: 0 auto;
     display: block;
 }
 
@@ -222,6 +222,17 @@ body {
 
 input[type='date'] {
     text-transform: uppercase;
+}
+
+.eventAvatar {
+    height: 40px;
+    width: 40px;
+    background-size: cover;
+    background-position: top center;
+    border-radius: 20px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 .react-datepicker, .panel-title {
