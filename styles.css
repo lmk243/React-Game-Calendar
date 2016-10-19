@@ -21,15 +21,100 @@ body {
     }
 }
 
-.intro, .features, .monthInfo, .flexContainer, .legend, .faveForm {
+.intro, .features, .monthInfo, .flexContainer, .legend, .faveForm, .toDoOuter {
     background: rgba(255,255,255,.7);
     margin-top: 20px;
     padding: 15px;
 }
 
+.toDoLists button {
+    margin-bottom: 10px;
+    background-color: transparent;
+}
+
+.toDoList1, .toDoList2 {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    align-content: end;
+    position: relative;
+    padding-top: 40px;
+}
+
+.list {
+    width: 350px;
+}
+
+.toDoLists h4 {
+    font-family: 'orbitronregular';
+    position: absolute;
+    top: 0;
+    font-size: 17px;
+    border-bottom: 1px solid black;
+    width: 100%;
+    font-weight: normal;
+    min-height: 20px;
+}
+
+.toDoLists {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: distribute;
+            justify-content: space-between;
+}
+
+.toDoLists input {
+    width: 225px;
+    display: block;
+    margin: 0 auto 20px;
+    background: transparent;
+}
+
 .faveForm {
     position: relative;
     overflow: hidden;
+}
+
+.completed::before {
+    content: '☑  ';
+    color: #333;
+}
+
+.incomplete::before {
+    content: '☐  ';
+    color: #333;
+}
+
+.incomplete, .completed {
+    text-align: left;
+    font-family: 'orbitronregular';
+    font-size: 16px;
+    margin: 0 auto 10px;
+    padding-left: 20px;
+}
+
+.createTitle input, .itemButtons input {
+    width: 180px !important;
+    display: inline-block !important;
+    height: 32px !important;
+}
+
+.createTitle button, .itemButtons button {
+    display: inline-block !important;
+    float: right;
+}
+
+.createTitle, .itemButtons {
+    width: 325px;
+    margin: 10px auto 0;
+    height: 45px;
+}
+
+.itemButtons {
+    margin-top: 30px;
 }
 
 .Games {
@@ -230,9 +315,16 @@ input[type='date'] {
     background-size: cover;
     background-position: top center;
     border-radius: 20px;
+    -webkit-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
+    box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
     float: left;
     margin-right: 10px;
     margin-bottom: 10px;
+}
+
+.emptyAvatar {
+    display: none;
 }
 
 .react-datepicker, .panel-title {
@@ -376,6 +468,10 @@ input:-ms-input-placeholder {
     border: 1px solid #000;
 }
 
+#event p {
+    width: 160px;
+}
+
 #event h1 {
     font-family: 'orbitronregular';
     border-bottom: 1px solid black;
@@ -456,6 +552,15 @@ h3 {
     padding: 8px 0 0 5px;
 }
 
+.resetBox button {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.resetBox .modal-footer {
+    text-align: center;
+}
+
 #reset {
     margin-top: 35px;
     width: 176px !important;
@@ -465,16 +570,13 @@ h3 {
 #reset:hover {
     background: red;
 }
-#reset:hover span {
-    display:none
+
+#reset:hover svg {
+    color: #fff;
 }
 
-#reset:hover:before {
-    content:"Are You Sure?";
-}
-
-#reset:disabled:hover span {
-    display: block;
+#reset:disabled:hover svg {
+    color: red;
 }
 
 #reset:disabled:hover:before, #reset:disabled:hover, #reset:disabled {
@@ -498,6 +600,12 @@ h3 {
 p.modalText {
     font-family: 'Play', sans-serif;
     font-size: 18px;
+}
+
+.hoverInfo {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
 }
 
 .xbox {
@@ -755,6 +863,10 @@ input {
     color: #333;
 }
 
+.faveForm button:hover svg {
+    color: #fff;
+}
+
 .faveForm button {
     background-color: transparent;
     display: inline-block;
@@ -768,7 +880,7 @@ input {
     background: transparent;
 }
 
-.faveForm button:disabled {
+.faveForm button:disabled, .toDoLists button:disabled {
     background: #a8a8a8;
     color: #333;
     opacity: .4;

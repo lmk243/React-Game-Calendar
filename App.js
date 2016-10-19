@@ -16,9 +16,12 @@ import ProgressBar from 'react-progress-bar-battlenet-style';
 
 var DatePicker = require('react-datepicker');
 var moment = require('moment');
-
 var myStorage = localStorage.getItem('eventsList')==null ? [] : JSON.parse(localStorage.getItem('eventsList'));
 var myFaves = localStorage.getItem('favesList')==null ? [] : JSON.parse(localStorage.getItem('favesList'));
+var myToDo = localStorage.getItem('toDoList')==null ? [] : JSON.parse(localStorage.getItem('toDoList'));
+var myToDo2 = localStorage.getItem('toDoList2')==null ? [] : JSON.parse(localStorage.getItem('toDoList2'));
+var myTitle = localStorage.getItem('listTitle')==null ? [] : JSON.parse(localStorage.getItem('listTitle'));
+var myTitle2 = localStorage.getItem('listTitle2')==null ? [] : JSON.parse(localStorage.getItem('listTitle2'));
 
 var d = new Date();
 
@@ -137,13 +140,16 @@ class Favorites extends React.Component {
             classes: '',
             classesList : '',
             drawerClass: 'closed',
-            games: myFaves
+            games: myFaves,
+            showModal: false
         };
         this.handleClickView = this.handleClickView.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.checkInput = this.checkInput.bind(this);
         this.closeDrawer = this.closeDrawer.bind(this);
-        this.deleteFavorites = this.deleteFavorites.bind(this);
+        this.open = this.open.bind(this);
+        this.cancel = this.cancel.bind(this);
+        this.clear = this.clear.bind(this);
     }
     
     checkInput() {
@@ -176,9 +182,18 @@ class Favorites extends React.Component {
         this.setState({drawerClass: 'open animated slideInUp'});
     }
     
-    deleteFavorites() {
+    clear() {
+        this.setState({ showModal: false });
         delete localStorage['favesList'];
         window.location.reload();
+      }
+    
+    cancel() {
+        this.setState({ showModal: false });
+    }
+
+    open() {
+        this.setState({ showModal: true });
     }
     
     closeDrawer() {
@@ -196,7 +211,20 @@ class Favorites extends React.Component {
             <button onClick={this.handleClick} disabled={this.state.disabled} className={this.state.classes}>
                 <Glyphicon glyph="plus" /> Add Favorite
                 </button>
-            <button onClick={this.deleteFavorites} className={this.state.classesList} disabled={this.state.disabledList}><Icon name='warning' /> Delete Favorites</button>
+            <button onClick={this.open} className={this.state.classesList} disabled={this.state.disabledList}><Icon name='warning' /> Delete Favorites</button>
+            
+            <Modal className="resetBox" show={this.state.showModal} bsSize="small" onHide={this.cancel}>          
+          <Modal.Body>
+            <p className="modalText">
+                Are you sure you wish to clear your favorites?
+            </p>
+          </Modal.Body>
+          <Modal.Footer>
+            <button onClick={this.clear}>Confirm</button>
+            <button onClick={this.cancel}>Cancel</button>
+          </Modal.Footer>
+        </Modal>
+            
                 <button onClick={this.handleClickView} className={this.state.classesList} disabled={this.state.disabledList}><Glyphicon glyph="eye-open" /> View Favorites</button>
             </div>
             
@@ -405,17 +433,22 @@ constructor(props) {
                 disabled: eventsDisabled
             };
         this.open = this.open.bind(this);
-        this.close = this.close.bind(this);
+        this.cancel = this.cancel.bind(this);
+        this.clear = this.clear.bind(this);
     
     }
     
-    close() {
+    clear() {
         this.setState({ showModal: false });
-         window.location.reload();
+        delete localStorage['eventsList'];
+        window.location.reload();
       }
+    
+    cancel() {
+        this.setState({ showModal: false });
+    }
 
     open() {
-        delete localStorage['eventsList'];
         this.setState({ showModal: true });
     }
     
@@ -425,14 +458,15 @@ constructor(props) {
         <button type="button" id="reset" onClick={this.open} disabled={this.state.disabled}><span><Icon name='warning' /> Clear Calendar</span></button>
         
         
-        <Modal show={this.state.showModal} bsSize="small" onHide={this.close}>          
+        <Modal className="resetBox" show={this.state.showModal} bsSize="small" onHide={this.cancel}>          
           <Modal.Body>
             <p className="modalText">
-                Your calendar has been cleared
+                Are you sure you wish to clear your calendar?
             </p>
           </Modal.Body>
           <Modal.Footer>
-            <button onClick={this.close}>Close</button>
+            <button onClick={this.clear}>Confirm</button>
+            <button onClick={this.cancel}>Cancel</button>
           </Modal.Footer>
         </Modal>
         
@@ -442,6 +476,329 @@ constructor(props) {
 }
 
 
+class ToDo1 extends React.Component {
+    
+constructor(props) {
+        super(props);
+    
+        if (localStorage.toDoList == undefined) {
+            var itemDisabled = true;
+        } else {
+            var itemDisabled = false;
+        }
+    
+        this.state = {
+            disabled: true,
+            disabledTitle: true,
+            classes: '',
+            classesTitle: '',
+            classesList : 'incomplete',
+            disabledList: itemDisabled,
+            list: myToDo,
+            title: myTitle
+            };
+    
+        this.check = this.check.bind(this);
+        this.checkInput = this.checkInput.bind(this);
+        this.checkInputTitle = this.checkInputTitle.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleClickTitle = this.handleClickTitle.bind(this);
+        this.open = this.open.bind(this);
+        this.cancel = this.cancel.bind(this);
+        this.clear = this.clear.bind(this);
+    
+    }
+    
+    clear() {
+        this.setState({ showModal: false });
+        delete localStorage['listTitle'];
+        delete localStorage['toDoList'];
+        window.location.reload();
+      }
+    
+    cancel() {
+        this.setState({ showModal: false });
+    }
+
+    open() {
+        this.setState({ showModal: true });
+    }
+    
+    check(e) {
+        for (let i = 0; i < myToDo.length; i++) {
+            if(myToDo[i].title == e.target.innerHTML){
+                if(e.target.className == "incomplete") {
+                    var tempTitle = myToDo[i].title;
+                    var newList = myToDo.slice();
+                    newList.splice (i, 1, {
+                        title: tempTitle,
+                        classes: 'completed'
+                    });
+                    this.setState({list: newList});
+                    localStorage.setItem( 'toDoList', JSON.stringify(newList));
+                    myToDo = localStorage.getItem('toDoList')==null ? [] : JSON.parse(localStorage.getItem('toDoList'));
+                }
+            }
+        }
+    }
+    
+    handleClick() {
+        var listItem = ReactDOM.findDOMNode(this.refs.listItem).value; 
+        
+        var arr = this.state.list;
+        
+        arr.push ({
+            title: listItem,
+            classes: 'incomplete'
+        });
+        
+        this.setState({
+            list: arr,
+            disabledList: false,
+            classesList: 'animated rubberBand'
+        });
+        
+        localStorage.setItem( 'toDoList', JSON.stringify(this.state.list));  
+        
+        ReactDOM.findDOMNode(this.refs.listItem).value = "";
+    }
+    
+    handleClickTitle() {
+        var newTitle = ReactDOM.findDOMNode(this.refs.title).value; 
+        
+        this.setState({
+            title: newTitle,
+            disabledTitle: true,
+            classesTitle: ''
+        });
+        
+        delete localStorage['listTitle'];
+        localStorage.setItem( 'listTitle', JSON.stringify(newTitle));  
+        myTitle = localStorage.getItem('listTitle')==null ? [] : JSON.parse(localStorage.getItem('listTitle'));
+        
+        ReactDOM.findDOMNode(this.refs.title).value = "";
+    }
+    
+    checkInput() {
+        if (ReactDOM.findDOMNode(this.refs.listItem).value.length != 0) {
+            this.setState({disabled: false, classes: 'animated rubberBand'});
+        } else {
+            this.setState({disabled: true, classes: ''});
+        }
+    }
+    
+    checkInputTitle() {
+        if (ReactDOM.findDOMNode(this.refs.title).value.length != 0) {
+            this.setState({disabledTitle: false, classesTitle: 'animated rubberBand'});
+        } else {
+            this.setState({disabledTitle: true, classesTitle: ''});
+        }
+    }
+    
+  render() {
+    return (
+        <div className="toDoList1">
+        <h4>{this.state.title}</h4>
+        <div className="list">
+            {this.state.list.map(function(item, index){
+                return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}</p>;
+            }, this)}
+    </div>
+        <div className="itemButtons">
+            <input type="text" ref="listItem" className="listItem" placeholder="Add Item" onChange={this.checkInput} />
+                <button onClick={this.handleClick} disabled={this.state.disabled} className={this.state.classes}>
+                    <Glyphicon glyph="plus" /> Add Item
+                    </button>
+                  
+            </div>  
+                <div className="createTitle">
+                    <input type="text" ref="title" className="" onChange={this.checkInputTitle} placeholder="List Title" />
+                    <button disabled={this.state.disabledTitle} onClick={this.handleClickTitle} className={this.state.classesTitle}>Create Title</button>
+                </div>
+                    
+                <button onClick={this.open} className={this.state.disabledList} disabled={this.state.disabledList}><Icon name='warning' /> Delete List</button>
+                
+            <Modal className="resetBox" show={this.state.showModal} bsSize="small" onHide={this.cancel}>          
+                <Modal.Body>
+                    <p className="modalText">
+                        Are you sure you wish to clear your first list?
+                    </p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button onClick={this.clear}>Confirm</button>
+                    <button onClick={this.cancel}>Cancel</button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+      );
+    }
+}
+
+
+class ToDo2 extends React.Component {
+    
+constructor(props) {
+        super(props);
+    
+        if (localStorage.toDoList2 == undefined) {
+            var itemDisabled = true;
+        } else {
+            var itemDisabled = false;
+        }
+    
+        this.state = {
+            disabled: true,
+            disabledTitle: true,
+            classes: '',
+            classesTitle: '',
+            classesList : 'incomplete',
+            disabledList: itemDisabled,
+            list: myToDo2,
+            title: myTitle2
+            };
+    
+        this.check = this.check.bind(this);
+        this.checkInput = this.checkInput.bind(this);
+        this.checkInputTitle = this.checkInputTitle.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleClickTitle = this.handleClickTitle.bind(this);
+        this.open = this.open.bind(this);
+        this.cancel = this.cancel.bind(this);
+        this.clear = this.clear.bind(this);
+    }
+    
+    clear() {
+        this.setState({ showModal: false });
+        delete localStorage['listTitle2'];
+        delete localStorage['toDoList2'];
+        window.location.reload();
+      }
+    
+    cancel() {
+        this.setState({ showModal: false });
+    }
+
+    open() {
+        this.setState({ showModal: true });
+    }
+    
+    check(e) {
+        for (let i = 0; i < myToDo2.length; i++) {
+            if(myToDo2[i].title == e.target.innerHTML){
+                if(e.target.className == "incomplete") {
+                    var tempTitle = myToDo2[i].title;
+                    var newList = myToDo2.slice();
+                    newList.splice (i, 1, {
+                        title: tempTitle,
+                        classes: 'completed'
+                    });
+                    this.setState({list: newList});
+                    localStorage.setItem( 'toDoList2', JSON.stringify(newList));
+                    myToDo2 = localStorage.getItem('toDoList2')==null ? [] : JSON.parse(localStorage.getItem('toDoList2'));
+                }
+                
+            }
+        }
+        
+    }
+    
+    handleClick() {
+        var listItem = ReactDOM.findDOMNode(this.refs.listItem2).value; 
+        
+        var arr = this.state.list;
+        
+        arr.push ({
+            title: listItem,
+            classes: 'incomplete'
+        });
+        
+        this.setState({
+            list: arr,
+            disabledList: false,
+            classesList: 'animated rubberBand'
+        });
+        
+        localStorage.setItem( 'toDoList2', JSON.stringify(this.state.list));  
+        
+        ReactDOM.findDOMNode(this.refs.listItem2).value = "";
+    }
+
+
+     handleClickTitle() {
+        var newTitle = ReactDOM.findDOMNode(this.refs.title2).value; 
+        
+        this.setState({
+            title: newTitle,
+            disabledTitle: true,
+            classesTitle: ''
+        });
+        
+        delete localStorage['listTitle2'];
+        localStorage.setItem( 'listTitle2', JSON.stringify(newTitle));  
+        myTitle2 = localStorage.getItem('listTitle2')==null ? [] : JSON.parse(localStorage.getItem('listTitle2'));
+        
+        ReactDOM.findDOMNode(this.refs.title2).value = "";
+    }
+    
+    checkInput() {
+        if (ReactDOM.findDOMNode(this.refs.listItem2).value.length != 0) {
+            this.setState({disabled: false, classes: 'animated rubberBand'});
+        } else {
+            this.setState({disabled: true, classes: ''});
+        }
+    }
+
+    checkInputTitle() {
+        if (ReactDOM.findDOMNode(this.refs.title2).value.length != 0) {
+            this.setState({disabledTitle: false, classesTitle: 'animated rubberBand'});
+        } else {
+            this.setState({disabledTitle: true, classesTitle: ''});
+        }
+    }
+    
+  render() {
+    return (
+        <div className="toDoList2">
+        <h4>{this.state.title}</h4>
+            <div className="list">
+        {this.state.list.map(function(item, index){
+                return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}</p>;
+            }, this)}
+</div>
+        
+            <div className="itemButtons">
+            <input type="text" ref="listItem2" className="listItem" placeholder="Add Item" onChange={this.checkInput} />
+                <button onClick={this.handleClick} disabled={this.state.disabled} className={this.state.classes}>
+                    <Glyphicon glyph="plus" /> Add Item
+                    </button>
+                  
+            </div>  
+                    
+                <div className="createTitle">
+                    <input type="text" ref="title2" className="" onChange={this.checkInputTitle} placeholder="List Title" />
+                    <button disabled={this.state.disabledTitle} onClick={this.handleClickTitle} className={this.state.classesTitle}>Create Title</button>
+                </div>
+                    
+                    
+                <button onClick={this.open} className={this.state.disabledList} disabled={this.state.disabledList}><Icon name='warning' /> Delete List</button>
+                
+            <Modal className="resetBox" show={this.state.showModal} bsSize="small" onHide={this.cancel}>          
+                <Modal.Body>
+                    <p className="modalText">
+                        Are you sure you wish to clear your second list?
+                    </p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button onClick={this.clear}>Confirm</button>
+                    <button onClick={this.cancel}>Cancel</button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+      );
+    }
+}
+                        
+
 class Features extends React.Component {
     
   render() {
@@ -450,6 +807,7 @@ class Features extends React.Component {
             <div className="new">
                 <h3>New Features</h3>
                 <ul>
+                        <li>Added two to do lists with delete and titles <Label bsStyle="success">New</Label></li>
                         <li>Wire favorites into localStorage and delete functionality <Label bsStyle="success">New</Label></li>
                         <li>Future Events Percentages and Summary <Label bsStyle="success">New</Label></li>
                 </ul>
@@ -463,6 +821,7 @@ class Features extends React.Component {
         <div className="bugs">
                 <h3>Known Bugs</h3>
                 <ul>
+                        <li>Adding a to do item after checking one off will not allow to check new item until page refresh <Label bsStyle="danger">Bug</Label></li>
                         <li>Events with same name may remove strangely <Label bsStyle="danger">Bug</Label></li>
                         <li>No calendar IE support <Label bsStyle="danger">Bug</Label></li>
                         <li>Trying to create an event that spans into a day that has one already overlaps that event <Label bsStyle="danger">Bug</Label></li>
@@ -627,6 +986,7 @@ class App extends React.Component {
         }
         this.state = {
             total: totCount,
+            avatarClass: 'eventAvatar',
             showPopover: false,
             showModal: false,
             showModal2: false,
@@ -658,6 +1018,15 @@ class App extends React.Component {
                 overlayDesc: eventData.description,
                 overlayImg: eventData.image
         });
+        if(eventData.image == "img/spacer.gif") {
+                this.setState({
+                avatarClass: 'eventAvatar emptyAvatar'
+            });
+        } else {
+            this.setState({
+                avatarClass: 'eventAvatar'
+            });
+        }
     }
 
     handleEventMouseOut(target, eventData, day) {
@@ -762,8 +1131,10 @@ class App extends React.Component {
                     <Popover id="event">
                     <div>
                         <h1>{this.state.overlayTitle}</h1>
-                        <div className="eventAvatar" style={divStyle}></div>
-                        <p>{this.state.overlayDesc}</p>
+                        <div className="hoverInfo">
+                            <div className={this.state.avatarClass} style={divStyle}></div>
+                            <p>{this.state.overlayDesc}</p>
+                        </div>
                     </div>
                     </Popover>
                 </Overlay>
@@ -796,6 +1167,14 @@ class App extends React.Component {
 				</Tabs>
                 <Addition events={this.state.list} addEventHandler={this.addEvent} />
                 <Favorites />
+                    <div className="toDoOuter">
+                        <h3>To Do Lists</h3>
+                        <p>Keeping track of collectables or items? Store your thoughts here.  Any entries with the same name will be checked at the same time (NOTE: See bugs log for to do list issues)</p>
+                        <div className="toDoLists">
+                            <ToDo1 />
+                            <ToDo2 />
+                        </div>
+                    </div>
                 <Reset />
             </div>
         );
