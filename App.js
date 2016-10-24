@@ -318,6 +318,10 @@ class Summary extends React.Component {
                     decimalPart = "Error";
                 }
                 
+                if (now == myStorage[i].start && wholePart == 0) {
+                    decimalPart = "0 hours";
+                }
+                
                 if(myStorage[i].title.toLowerCase().indexOf(" end") >= 0 || myStorage[i].title.toLowerCase().indexOf(" ends") >= 0 || myStorage[i].title.toLowerCase().indexOf(" ending") >= 0) {
                     if (wholePart <= 1 ) {
                         warning = "HURRY!  This event ends soon!";
@@ -487,6 +491,30 @@ constructor(props) {
             var itemDisabled = false;
         }
     
+    var total = 0;
+    var complete = 0; 
+    var percent = 0;
+    
+    for (let i = 0; i < myToDo.length; i++) {
+        total = total + 1;
+        
+        if (myToDo[i].classes == "completed") {
+            complete = complete + 1;
+        }
+    }
+    
+    if ((complete/total) == 1) {         
+        percent = 100;
+    } else if((complete/total) == 0) {
+        percent = 0;
+    } else {
+        percent = (complete/total).toFixed(2).substring(2,4)
+    }
+    
+    if(percent == "N") {
+            percent = 0;
+        }
+      
         this.state = {
             disabled: true,
             disabledTitle: true,
@@ -495,7 +523,10 @@ constructor(props) {
             classesList : 'incomplete',
             disabledList: itemDisabled,
             list: myToDo,
-            title: myTitle
+            title: myTitle,
+            total: total,
+            done: complete,
+            percentage: percent
             };
     
         this.check = this.check.bind(this);
@@ -540,6 +571,21 @@ constructor(props) {
                 }
             }
         }
+            
+            var total = 0, complete = 0;
+    
+            for (let i = 0; i < myToDo.length; i++) {
+                total = total + 1;
+
+                if (myToDo[i].classes == "completed") {
+                    complete = complete + 1;
+                }
+            }
+            if ((complete/total) == 1) {
+                this.setState({percentage: 100, total: total, done: complete});
+            } else {
+                this.setState({percentage: (complete/total).toFixed(2).substring(2,4), total: total, done: complete});
+            }
     }
     
     handleClick() {
@@ -561,6 +607,22 @@ constructor(props) {
         localStorage.setItem( 'toDoList', JSON.stringify(this.state.list));  
         
         ReactDOM.findDOMNode(this.refs.listItem).value = "";
+        
+        var total = 0, complete = 0;
+    
+            for (let i = 0; i < myToDo.length; i++) {
+                total = total + 1;
+
+                if (myToDo[i].classes == "completed") {
+                    complete = complete + 1;
+                }
+            }
+            if ((complete/total) == 1) {
+                this.setState({percentage: 100, total: total, done: complete});
+            } else {
+                this.setState({percentage: (complete/total).toFixed(2).substring(2,4), total: total, done: complete});
+            }
+        console.log(this.state.percentage);
     }
     
     handleClickTitle() {
@@ -604,6 +666,10 @@ constructor(props) {
                 return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}</p>;
             }, this)}
     </div>
+    <div className="progressList">
+            <span className="fraction"> - {this.state.done} / {this.state.total}</span>
+            <ProgressBar completed={this.state.percentage} />
+        </div>
         <div className="itemButtons">
             <input type="text" ref="listItem" className="listItem" placeholder="Add Item" onChange={this.checkInput} />
                 <button onClick={this.handleClick} disabled={this.state.disabled} className={this.state.classes}>
@@ -645,7 +711,31 @@ constructor(props) {
         } else {
             var itemDisabled = false;
         }
-    
+                        
+        var total = 0;
+        var complete = 0; 
+        var percent = 0;
+
+        for (let i = 0; i < myToDo2.length; i++) {
+            total = total + 1;
+
+            if (myToDo2[i].classes == "completed") {
+                complete = complete + 1;
+            }
+        }
+                        
+        if ((complete/total) == 1) {         
+            percent = 100;
+        } else if((complete/total) == 0) {
+            percent = 0;
+        } else {
+            percent = (complete/total).toFixed(2).substring(2,4)
+        }
+                        
+        if(percent == "N") {
+            percent = 0;
+        }
+                        
         this.state = {
             disabled: true,
             disabledTitle: true,
@@ -654,7 +744,10 @@ constructor(props) {
             classesList : 'incomplete',
             disabledList: itemDisabled,
             list: myToDo2,
-            title: myTitle2
+            title: myTitle2,
+            total: total,
+            done: complete,
+            percentage: percent
             };
     
         this.check = this.check.bind(this);
@@ -699,6 +792,20 @@ constructor(props) {
                 
             }
         }
+            var total = 0, complete = 0;
+    
+            for (let i = 0; i < myToDo2.length; i++) {
+                total = total + 1;
+
+                if (myToDo2[i].classes == "completed") {
+                    complete = complete + 1;
+                }
+            }
+            if ((complete/total) == 1) {
+                this.setState({percentage: 100, total: total, done: complete});
+            } else {
+                this.setState({percentage: (complete/total).toFixed(2).substring(2,4), total: total, done: complete});
+            }
         
     }
     
@@ -721,6 +828,21 @@ constructor(props) {
         localStorage.setItem( 'toDoList2', JSON.stringify(this.state.list));  
         
         ReactDOM.findDOMNode(this.refs.listItem2).value = "";
+        
+        var total = 0, complete = 0;
+    
+            for (let i = 0; i < myToDo2.length; i++) {
+                total = total + 1;
+
+                if (myToDo2[i].classes == "completed") {
+                    complete = complete + 1;
+                }
+            }
+            if ((complete/total) == 1) {
+                this.setState({percentage: 100, total: total, done: complete});
+            } else {
+                this.setState({percentage: (complete/total).toFixed(2).substring(2,4), total: total, done: complete});
+            }
     }
 
 
@@ -764,8 +886,11 @@ constructor(props) {
         {this.state.list.map(function(item, index){
                 return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}</p>;
             }, this)}
-</div>
-        
+        </div>
+        <div className="progressList">
+            <span className="fraction"> - {this.state.done} / {this.state.total}</span>
+            <ProgressBar completed={this.state.percentage} />
+        </div>
             <div className="itemButtons">
             <input type="text" ref="listItem2" className="listItem" placeholder="Add Item" onChange={this.checkInput} />
                 <button onClick={this.handleClick} disabled={this.state.disabled} className={this.state.classes}>
