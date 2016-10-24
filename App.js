@@ -581,8 +581,11 @@ constructor(props) {
                     complete = complete + 1;
                 }
             }
+        
             if ((complete/total) == 1) {
                 this.setState({percentage: 100, total: total, done: complete});
+            } else if((complete/total) == 0) {
+                this.setState({percentage: 0, total: total, done: complete});
             } else {
                 this.setState({percentage: (complete/total).toFixed(2).substring(2,4), total: total, done: complete});
             }
@@ -619,10 +622,11 @@ constructor(props) {
             }
             if ((complete/total) == 1) {
                 this.setState({percentage: 100, total: total, done: complete});
+            } else if((complete/total) == 0) {
+                this.setState({percentage: 0, total: total, done: complete});
             } else {
                 this.setState({percentage: (complete/total).toFixed(2).substring(2,4), total: total, done: complete});
             }
-        console.log(this.state.percentage);
     }
     
     handleClickTitle() {
@@ -803,6 +807,8 @@ constructor(props) {
             }
             if ((complete/total) == 1) {
                 this.setState({percentage: 100, total: total, done: complete});
+            } else if((complete/total) == 0) {
+                this.setState({percentage: 0, total: total, done: complete});
             } else {
                 this.setState({percentage: (complete/total).toFixed(2).substring(2,4), total: total, done: complete});
             }
@@ -840,6 +846,8 @@ constructor(props) {
             }
             if ((complete/total) == 1) {
                 this.setState({percentage: 100, total: total, done: complete});
+            } else if((complete/total) == 0) {
+                this.setState({percentage: 0, total: total, done: complete});
             } else {
                 this.setState({percentage: (complete/total).toFixed(2).substring(2,4), total: total, done: complete});
             }
