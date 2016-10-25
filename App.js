@@ -569,6 +569,18 @@ constructor(props) {
                     localStorage.setItem( 'toDoList', JSON.stringify(newList));
                     myToDo = localStorage.getItem('toDoList')==null ? [] : JSON.parse(localStorage.getItem('toDoList'));
                 }
+                
+                if(e.target.className == "completed") {
+                    var tempTitle = myToDo[i].title;
+                    var newList = myToDo.slice();
+                    newList.splice (i, 1, {
+                        title: tempTitle,
+                        classes: 'incomplete'
+                    });
+                    this.setState({list: newList});
+                    localStorage.setItem( 'toDoList', JSON.stringify(newList));
+                    myToDo = localStorage.getItem('toDoList')==null ? [] : JSON.parse(localStorage.getItem('toDoList'));
+                }
             }
         }
             
@@ -794,6 +806,17 @@ constructor(props) {
                     myToDo2 = localStorage.getItem('toDoList2')==null ? [] : JSON.parse(localStorage.getItem('toDoList2'));
                 }
                 
+                if(e.target.className == "completed") {
+                    var tempTitle = myToDo2[i].title;
+                    var newList = myToDo2.slice();
+                    newList.splice (i, 1, {
+                        title: tempTitle,
+                        classes: 'incomplete'
+                    });
+                    this.setState({list: newList});
+                    localStorage.setItem( 'toDoList2', JSON.stringify(newList));
+                    myToDo2 = localStorage.getItem('toDoList2')==null ? [] : JSON.parse(localStorage.getItem('toDoList2'));
+                }
             }
         }
             var total = 0, complete = 0;
@@ -954,7 +977,7 @@ class Features extends React.Component {
         <div className="bugs">
                 <h3>Known Bugs</h3>
                 <ul>
-                        <li>Adding a to do item after checking one off will not allow to check new item until page refresh <Label bsStyle="danger">Bug</Label></li>
+                        <li>Adding a to do item after checking one off will not allow to check new item or update progress bar until page refresh <Label bsStyle="danger">Bug</Label></li>
                         <li>Events with same name may remove strangely <Label bsStyle="danger">Bug</Label></li>
                         <li>No calendar IE support <Label bsStyle="danger">Bug</Label></li>
                         <li>Trying to create an event that spans into a day that has one already overlaps that event <Label bsStyle="danger">Bug</Label></li>
