@@ -203,7 +203,7 @@ class Favorites extends React.Component {
     render() {
         return (
             <div className="faveForm">
-            <h3>Forgetting Something?</h3>
+            <h3>Forgetting Something? List Your Favorites</h3>
             <p>Know there's an event coming up but can't remember for what game?  Create a list of favorites.  Perhaps that'll jump start your memory.  Recommended number of entries: 16 or less</p>            
 
             <input type="text" ref="faveName" className="faveName" placeholder="Favorite" onChange={this.checkInput} />
@@ -682,8 +682,10 @@ constructor(props) {
                 return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}</p>;
             }, this)}
     </div>
+    <div className="bottom">
     <div className="progressList">
             <span className="fraction"> - {this.state.done} / {this.state.total}</span>
+            <div className="arrow-up"></div>
             <ProgressBar completed={this.state.percentage} />
         </div>
         <div className="itemButtons">
@@ -699,7 +701,7 @@ constructor(props) {
                 </div>
                     
                 <button onClick={this.open} className={this.state.disabledList} disabled={this.state.disabledList}><Icon name='warning' /> Delete List</button>
-                
+        </div>  
             <Modal className="resetBox" show={this.state.showModal} bsSize="small" onHide={this.cancel}>          
                 <Modal.Body>
                     <p className="modalText">
@@ -918,7 +920,9 @@ constructor(props) {
                 return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}</p>;
             }, this)}
         </div>
+    <div className="bottom">    
         <div className="progressList">
+            <div className="arrow-up"></div>
             <span className="fraction"> - {this.state.done} / {this.state.total}</span>
             <ProgressBar completed={this.state.percentage} />
         </div>
@@ -937,7 +941,7 @@ constructor(props) {
                     
                     
                 <button onClick={this.open} className={this.state.disabledList} disabled={this.state.disabledList}><Icon name='warning' /> Delete List</button>
-                
+        </div> 
             <Modal className="resetBox" show={this.state.showModal} bsSize="small" onHide={this.cancel}>          
                 <Modal.Body>
                     <p className="modalText">
@@ -1000,7 +1004,7 @@ class Intro extends React.Component {
                 <p>
                     Welcome to the React Game Calendar where you can keep notes on all your upcoming game releases.  Never forget another dlc, game or patch again!  Simply add an event with the day it begins and ends using the date fields below and a new entry will be stored on the associated day(s).  The calendar stores information using your browser's local storage which means if you try using a different browser other than what you started with, your entries will not carry over.  <strong><u>Click an event to remove it.</u></strong>
                     <br /> <br />
-                    No support currently for Internet Explorer.  NOT Mobile friendly.  Have a reliable internet connection for optimal user experience.
+                    No support currently for Internet Explorer.  NOT Mobile friendly.  Have a reliable internet connection for the best experience.
                 </p>
             </div>
         
@@ -1311,7 +1315,7 @@ class App extends React.Component {
                     <TabPanel>
                             <div className="tabsIntro animated slideInLeft">
                                 <p className="eventsCount"><u>Your number of upcoming events is</u>: <strong>{this.state.total}</strong></p>
-                            <p>Use the other tabs to find out the distribution of these upcoming events per platform as well as a summary list/image (if applicable) containing each.</p>
+                            <p>Use the other tabs to find out the distribution of these upcoming events per platform as well as a summary list containing each.</p>
                             </div>
                     </TabPanel>
 					<TabPanel>
@@ -1325,8 +1329,9 @@ class App extends React.Component {
                 <Favorites />
                     <div className="toDoOuter">
                         <h3>To Do Lists</h3>
-                        <p>Keeping track of collectables or items? Store your thoughts here.  Any entries with the same name will be checked at the same time (NOTE: See bugs log for to do list issues)</p>
+                        <p>Keeping track of collectibles or items? Store your thoughts here.  Any entries with the same name will be checked at the same time (NOTE: See bugs log for to do list issues)</p>
                         <div className="toDoLists">
+                        <div className="ribbon-wrapper-color"><div className="ribbon-color">NEW</div></div>
                             <ToDo1 />
                             <ToDo2 />
                         </div>
