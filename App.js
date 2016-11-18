@@ -1,5 +1,5 @@
-require('babel-polyfill');
-
+//require('babel-polyfill');
+var Slider = require('react-slick');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import EventCalendar from 'react-event-calendar/dist/react-event-calendar.js';
@@ -104,7 +104,8 @@ class Addition extends React.Component {
                             <option value="mobile">Mobile</option>
                     </select>    
             
-                    <input type="text" ref="description" className="eventDesc" placeholder="Enter a Description (Optional)" />
+                    <input type="text" ref="description" className="eventDesc" maxLength="30" placeholder="Enter a Description (Optional)" />
+                    <p>Max Length: 30 characters including spaces</p>
             
                     <input type="text" ref="image" className="eventDesc" placeholder="Image URL (Optional)" />
                     <p>Only supports hosted images.  No local file select. Ex: http://site.com/image.jpg</p>
@@ -326,6 +327,8 @@ class Summary extends React.Component {
                     if (wholePart <= 1 ) {
                         warning = "HURRY!  This event ends soon!";
                     }
+                } else {
+                    warning = "";
                 }
                 
                 if (wholePart > 1 || wholePart < 1) {
@@ -415,6 +418,39 @@ class Month extends React.Component {
                     <option value="11">December</option>
                 </select>
             <button type="button" onClick={this.handleClick} className="switchBtn"><Glyphicon glyph="calendar" /> Switch Month</button>
+            </div>
+        );
+    }
+}
+
+
+class GameSlider extends React.Component {
+    
+    constructor(props) {
+        super(props);
+    }
+    
+    render() {
+            var settings = {
+          dots: true,
+          dotsClass: 'dots',
+          draggable: false,
+          infinite: true,
+          autoplay: true,
+          autoplaySpeed: 8000,
+          speed: 500,
+          arrows: false,
+          slidesToShow: 1,
+          slidesToScroll: 1
+        };
+        return (
+        <div className="slider">
+        <span className="stitle">New and Upcoming Titles</span>
+        <Slider {...settings}>
+        <div><div className="game game1"><span>Dishonored 2</span></div></div>
+        <div><div className="game game2"><span>Final Fantasy XV</span></div></div>
+        <div><div className="game game3"><span>The Last Guardian</span></div></div>
+      </Slider>
             </div>
         );
     }
@@ -967,6 +1003,7 @@ class Features extends React.Component {
             <div className="new">
                 <h3>New Features</h3>
                 <ul>
+                        <li>New/Upcoming games carousel <Label bsStyle="success">New</Label></li>
                         <li>Added two to do lists with delete and titles <Label bsStyle="success">New</Label></li>
                         <li>Wire favorites into localStorage and delete functionality <Label bsStyle="success">New</Label></li>
                         <li>Future Events Percentages and Summary <Label bsStyle="success">New</Label></li>
@@ -1300,6 +1337,7 @@ class App extends React.Component {
                 </Overlay>
                 <Intro />
                 <Features />
+                <GameSlider />
                 <div className="monthInfo">
                     <h2>{this.state.header}</h2>
                     <Month month={this.state.month} switchHandler={this.switchEvent} />
