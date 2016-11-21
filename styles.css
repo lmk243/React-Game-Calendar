@@ -282,6 +282,7 @@ body {
     width: 90%;
     margin: 0 auto 10px;
     padding: 0;
+    opacity: .7;
     overflow: hidden;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -299,10 +300,17 @@ body {
 
 .Games li {
     width: 164px;
-    font-size: 15px;
-    font-family: 'Play', sans-serif;
+    font-size: 13px;
+    font-family: 'orbitronregular';
+    letter-spacing: 3px;
+    opacity: .7;
+    font-weight: bold;
     text-align: center;
     list-style: none;
+   color: #000;
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  text-shadow: 1px 1px 0  #fff, -1px -1px 0 #fff , 1px -1px 0 #fff, -1px 1px 0  #fff;
 }
 
 #drawer {
@@ -857,6 +865,7 @@ h5 {
     font-family: 'orbitronregular';
     border-bottom: 1px solid #fff;
     font-size: 20px;
+    opacity: .7;
 }
 
 .flexColumn {
@@ -1003,6 +1012,25 @@ select {
     width: 100px;
 }
 
+.Arrow {
+    width: 530px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.arrowBtn {
+    left: 78px;
+    position: absolute;
+    top: 16px;
+}
+
+.arrowBtn2 {
+    left: 15px;
+    position: absolute;
+    top: 16px;
+}
+
 .Months button {
     display: inline-block;
 }
@@ -1012,18 +1040,18 @@ select {
     width: 200px !important;
     height: 32px;
     border: 1px solid black;
-    margin-right: 20px;
+    margin-right: 6px;
     font-family: 'orbitronregular';
 }
 
 .Months {
-    width: 385px;
+    width: 372px;
     position: absolute;
     top: -4px;
     right: 15px;
 }
 
-.Months select, .Months button {
+.Months select, .Arrow button {
     background: transparent;
 }
 
@@ -1117,6 +1145,7 @@ input {
 button {
     font-family: 'orbitronregular' !important;
     margin: 0 auto;
+    outline: 0;
     display: block;
     background-color: rgba(255, 255, 255, .7);
     border: 1px solid black;

@@ -391,6 +391,8 @@ class Month extends React.Component {
             month: this.props.month
         };
         this.handleClick = this.handleClick.bind(this);
+        this.next = this.next.bind(this);
+        this.prev = this.prev.bind(this);
     }
     
     handleClick() {
@@ -400,24 +402,43 @@ class Month extends React.Component {
         
     }
     
+    next() {
+        
+        this.props.nextHandler();
+        
+    }
+    
+    prev() {
+        
+        this.props.prevHandler();
+        
+    }
+    
     render() {
         return (
-            <div className="Months">
-                <select ref="month" className="monthSelect">
-                    <option value="0">January</option>
-                    <option value="1">February</option>
-                    <option value="2">March</option>
-                    <option value="3">April</option>
-                    <option value="4">May</option>
-                    <option value="5">June</option>
-                    <option value="6">July</option>
-                    <option value="7">August</option>
-                    <option value="8">September</option>
-                    <option value="9">October</option>
-                    <option value="10">November</option>
-                    <option value="11">December</option>
-                </select>
-            <button type="button" onClick={this.handleClick} className="switchBtn"><Glyphicon glyph="calendar" /> Switch Month</button>
+            <div className="Arrow">
+            <button onClick={this.prev} type="button" className="arrowBtn2"><Glyphicon glyph="menu-left" /></button>
+            
+            <button onClick={this.next} type="button" className="arrowBtn"><Glyphicon glyph="menu-right" /></button>
+            
+                <div className="Months">
+                    <select ref="month" className="monthSelect">
+                        <option value="0">January</option>
+                        <option value="1">February</option>
+                        <option value="2">March</option>
+                        <option value="3">April</option>
+                        <option value="4">May</option>
+                        <option value="5">June</option>
+                        <option value="6">July</option>
+                        <option value="7">August</option>
+                        <option value="8">September</option>
+                        <option value="9">October</option>
+                        <option value="10">November</option>
+                        <option value="11">December</option>
+                    </select>
+                <button type="button" onClick={this.handleClick} className="switchBtn"><Glyphicon glyph="calendar" /> Switch Month</button>
+                </div>
+            
             </div>
         );
     }
@@ -1198,6 +1219,8 @@ class App extends React.Component {
         }
         this.addEvent = this.addEvent.bind(this);
         this.switchEvent = this.switchEvent.bind(this);
+        this.nextMonth = this.nextMonth.bind(this);
+        this.prevMonth = this.prevMonth.bind(this);
         this.handleEventMouseOver = this.handleEventMouseOver.bind(this);
         this.handleEventMouseOut = this.handleEventMouseOut.bind(this);
         this.onEventClick = this.onEventClick.bind(this);
@@ -1294,6 +1317,39 @@ class App extends React.Component {
         });
         
     }
+    
+    nextMonth() {
+        
+        var nextMonth = this.state.month + 1;
+        var newYear = this.state.year;
+        
+        if (nextMonth == 12) {
+            nextMonth = 0;
+            newYear = newYear + 1;
+        }
+        
+        this.setState({
+            month: nextMonth,
+            header: monthNames[nextMonth],
+            year: newYear
+        });
+    }
+    
+    prevMonth() {
+        var prevMonth = this.state.month - 1;
+        var newYear = this.state.year;
+        
+        if (prevMonth == -1) {
+            prevMonth = 11;
+            newYear = newYear - 1;
+        }
+        
+        this.setState({
+            month: prevMonth,
+            header: monthNames[prevMonth],
+            year: newYear
+        });
+    }
 
     render() {
         
@@ -1340,7 +1396,7 @@ class App extends React.Component {
                 <GameSlider />
                 <div className="monthInfo">
                     <h2>{this.state.header}</h2>
-                    <Month month={this.state.month} switchHandler={this.switchEvent} />
+                    <Month month={this.state.month} switchHandler={this.switchEvent} nextHandler={this.nextMonth} prevHandler={this.prevMonth} />
                 </div>
                 <EventCalendar month={this.state.month} year={this.state.year} events={this.state.list} onEventClick={this.onEventClick} onEventMouseOver={this.handleEventMouseOver} onEventMouseOut={this.handleEventMouseOut} />
                 <Legend />
