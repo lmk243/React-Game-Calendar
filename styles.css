@@ -398,8 +398,12 @@ body {
     opacity: .7;
 }
 
-.flexContainer, .intro {
+.flexContainer {
     margin-top: 0;
+}
+
+.intro {
+    margin-top: 50px;
 }
 
 .day.inactive {
@@ -1108,10 +1112,6 @@ input {
     color: #333;
 }
 
-.faveForm button:hover svg {
-    color: #fff;
-}
-
 .faveForm button {
     background-color: transparent;
     display: inline-block;
@@ -1140,6 +1140,93 @@ input {
 
 .progress__text {
     width: 5em !important;
+}
+
+.Card, .CardImage {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 0 10px !important;
+}
+
+.Heading {
+    border: none;
+}
+
+.Text {
+    font-family: 'Play', sans-serif !important;
+    font-size: 14px !important;
+}
+
+.navBar {
+    position: fixed;
+    width: 100%;
+    margin: 0 auto;
+    z-index: 99999999;
+    left: 0;
+    top: 0;
+    background: #c2c2c2;
+    text-align: center;
+}
+
+.inner {
+    max-width: 750px;
+    margin: 0 auto;
+    font-family: 'orbitronregular';
+}
+
+.nav {
+    font-size: 12px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+
+.nav>li>a {
+    padding: 10px 7px;
+    opacity: .7;
+}
+
+.orange a {
+    color: #a83d12;
+}
+
+.orange:hover {
+   background: #a83d12; !important;
+    opacity: .7 !important;
+    text-decoration: underline !important;
+}
+
+.red a {
+    color: #7c0707;
+}
+
+.red:hover {
+   background: #7c0707 !important;
+    opacity: .7 !important;
+    text-decoration: underline !important;
+}
+
+.green a {
+    color: #2d4d1e;
+}
+
+.green:hover {
+   background: #2d4d1e !important;
+    opacity: .7 !important;
+    text-decoration: underline !important;
+}
+
+.blue a {
+    color: #071a45;
+}
+
+.blue:hover {
+   background: #071a45 !important;
+    opacity: .7 !important;
+    text-decoration: underline !important;
 }
 
 button {

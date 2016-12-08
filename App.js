@@ -6,11 +6,14 @@ import EventCalendar from 'react-event-calendar/dist/react-event-calendar.js';
 import Popover from 'react-bootstrap/lib/PopOver';
 import Overlay from 'react-bootstrap/lib/Overlay';
 import Label from 'react-bootstrap/lib/Label';
+import Nav from 'react-bootstrap/lib/Nav';
+import NavItem from 'react-bootstrap/lib/NavItem';
 import Modal from 'react-bootstrap/lib/Modal';
 import Accordion from 'react-bootstrap/lib/Accordion';
 import Panel from 'react-bootstrap/lib/Panel';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Icon from 'react-geomicons';
+import {Card, CardImage, Text, Heading } from 'rebass';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ProgressBar from 'react-progress-bar-battlenet-style';
 
@@ -449,6 +452,43 @@ class GameSlider extends React.Component {
     
     constructor(props) {
         super(props);
+        
+        this.state = {
+            showModal: false,
+            showModal2: false,
+            showModal3: false
+        }
+        
+        this.open = this.open.bind(this);
+        this.close = this.close.bind(this);
+        this.open2 = this.open2.bind(this);
+        this.close2 = this.close2.bind(this);
+        this.open3 = this.open3.bind(this);
+        this.close3 = this.close3.bind(this);
+    }
+    
+    close() {
+        this.setState({ showModal: false });
+      }
+
+    open() {
+        this.setState({ showModal: true });
+    }
+    
+    close3() {
+        this.setState({ showModal3: false });
+      }
+
+    open3() {
+        this.setState({ showModal3: true });
+    }
+    
+    close2() {
+        this.setState({ showModal2: false });
+      }
+
+    open2() {
+        this.setState({ showModal2: true });
     }
     
     render() {
@@ -466,11 +506,90 @@ class GameSlider extends React.Component {
         };
         return (
         <div className="slider">
+            
+            <Modal show={this.state.showModal} bsSize="small" onHide={this.close}>          
+              <Modal.Body>
+                <Card
+                  rounded
+                  width={256}
+                >
+                 <div className="cardContainer">
+                     <CardImage src="img/dishonored.jpg" />
+                </div>
+                  <Heading
+                    level={2}
+                    size={3}
+                  >
+                    Dishonored 2
+                  </Heading>
+                  <Text>
+                    <u>Platform(s)</u>: PC/XBOX/PS4<br />
+                    <u>Known DLC</u>: New Game +/Level Select
+                  </Text>
+                </Card>
+              </Modal.Body>
+              <Modal.Footer>
+                <button onClick={this.close}>Close</button>
+              </Modal.Footer>
+            </Modal>
+            
+            <Modal show={this.state.showModal2} bsSize="small" onHide={this.close2}>          
+              <Modal.Body>
+                <Card
+                  rounded
+                  width={256}
+                >
+                 <div className="cardContainer">
+                     <CardImage src="img/Final-Fantasy-XV.jpg" />
+                </div>
+                  <Heading
+                    level={2}
+                    size={3}
+                  >
+                    Final Fantasy XV
+                  </Heading>
+                  <Text>
+                    <u>Platform(s)</u>: XBOX/PS4<br />
+                    <u>Known DLC</u>: N/A
+                  </Text>
+                </Card>
+              </Modal.Body>
+              <Modal.Footer>
+                <button onClick={this.close2}>Close</button>
+              </Modal.Footer>
+            </Modal>
+            
+            <Modal show={this.state.showModal3} bsSize="small" onHide={this.close3}>          
+              <Modal.Body>
+                <Card
+                  rounded
+                  width={256}
+                >
+                 <div className="cardContainer">
+                     <CardImage src="img/last-guardian.jpg" />
+                </div>
+                  <Heading
+                    level={2}
+                    size={3}
+                  >
+                    The Last Guardian
+                  </Heading>
+                  <Text>
+                    <u>Platform(s)</u>: PS4<br />
+                    <u>Known DLC</u>: N/A
+                  </Text>
+                </Card>
+              </Modal.Body>
+              <Modal.Footer>
+                <button onClick={this.close3}>Close</button>
+              </Modal.Footer>
+            </Modal>
+            
         <span className="stitle">New and Upcoming Titles</span>
         <Slider {...settings}>
-        <div><div className="game game1"><span>Dishonored 2</span></div></div>
-        <div><div className="game game2"><span>Final Fantasy XV</span></div></div>
-        <div><div className="game game3"><span>The Last Guardian</span></div></div>
+        <div><div className="game game1" onClick={this.open}><span>Dishonored 2</span></div></div>
+        <div><div className="game game2" onClick={this.open2}><span>Final Fantasy XV</span></div></div>
+        <div><div className="game game3" onClick={this.open3}><span>The Last Guardian</span></div></div>
       </Slider>
             </div>
         );
@@ -531,6 +650,32 @@ constructor(props) {
           </Modal.Footer>
         </Modal>
         
+        </div>
+      );
+    }
+}
+
+
+class Navbar extends React.Component {
+    
+constructor(props) {
+        super(props);
+}
+  render() {
+    return (
+        <div className="navBar">
+        <div className="inner">
+        <Nav bsStyle="pills">
+            <NavItem eventKey={1} href="#features" className="orange">Features/Bugs</NavItem>
+            <NavItem eventKey={2} href="#nu" className="red">New/Upcoming</NavItem>
+            <NavItem eventKey={3} href="#calendar" className="green">Calendar</NavItem>
+            <NavItem eventKey={4} href="#stats" className="blue">Statistics</NavItem>
+            <NavItem eventKey={5} href="#add" className="orange">Add Event</NavItem>
+            <NavItem eventKey={6} href="#favorites" className="red">Favorites</NavItem>
+            <NavItem eventKey={7} href="#todos" className="green">To Do Lists</NavItem>
+            <NavItem eventKey={8} href="#top" className="blue"><Glyphicon glyph="menu-up" />Top</NavItem>
+          </Nav>
+        </div>
         </div>
       );
     }
@@ -1391,15 +1536,22 @@ class App extends React.Component {
                     </div>
                     </Popover>
                 </Overlay>
+                            
+                <Navbar />
+                <a name="top"></a> 
                 <Intro />
+                <a name="features"></a> 
                 <Features />
+                <a name="nu"></a> 
                 <GameSlider />
+                <a name="calendar"></a> 
                 <div className="monthInfo">
                     <h2>{this.state.header}</h2>
                     <Month month={this.state.month} switchHandler={this.switchEvent} nextHandler={this.nextMonth} prevHandler={this.prevMonth} />
                 </div>
                 <EventCalendar month={this.state.month} year={this.state.year} events={this.state.list} onEventClick={this.onEventClick} onEventMouseOver={this.handleEventMouseOver} onEventMouseOut={this.handleEventMouseOut} />
                 <Legend />
+                    <a name="stats"></a> 
                     <Tabs>
 					<TabList>
                         <Tab>Upcoming Events</Tab>
@@ -1408,6 +1560,7 @@ class App extends React.Component {
 					</TabList>
                     <TabPanel>
                             <div className="tabsIntro animated slideInLeft">
+                                <a name="add"></a> 
                                 <p className="eventsCount"><u>Your number of upcoming events is</u>: <strong>{this.state.total}</strong></p>
                             <p>Use the other tabs to find out the distribution of these upcoming events per platform as well as a summary list containing each.</p>
                             </div>
@@ -1419,8 +1572,11 @@ class App extends React.Component {
 						<Summary />
 					</TabPanel>					
 				</Tabs>
+                
                 <Addition events={this.state.list} addEventHandler={this.addEvent} />
+                <a name="favorites"></a> 
                 <Favorites />
+                    <a name="todos"></a> 
                     <div className="toDoOuter">
                         <h3>To Do Lists</h3>
                         <p>Keeping track of collectibles or items? Store your thoughts here.  Any entries with the same name will be checked at the same time (NOTE: See bugs log for to do list issues)</p>
