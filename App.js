@@ -1872,8 +1872,11 @@ class App extends React.Component {
                     <div className="ribbon-wrapper-color"><div className="ribbon-color">NEW</div></div>
                     <h3>Notes</h3>
                     <p>Need a place to store your thoughts?  Perhaps a reminder for a DLC or event that has no date yet?  Write it here!</p>
+                    <hr />
                     <Note1 />
+                    <hr />
                     <Note2 />
+                    <hr />
                     <Note3 />
                     </div>
                     
