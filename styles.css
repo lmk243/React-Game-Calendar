@@ -21,10 +21,61 @@ body {
     }
 }
 
-.intro, .features, .monthInfo, .flexContainer, .legend, .faveForm, .toDoOuter, .slider {
+.intro, .features, .monthInfo, .flexContainer, .legend, .faveForm, .toDoOuter, .slider, .notes, .smileLeg {
     background: rgba(255,255,255,.7);
     margin-top: 20px;
     padding: 15px;
+}
+
+.notes .noteContain {
+    padding: 10px;
+    border: 1px solid #000;
+    margin-bottom: 20px;
+}
+
+.notes .noteContain:last-of-type {
+    margin-bottom: 0;
+}
+
+.notes p {
+    font-family: 'Play', sans-serif;
+}
+
+.smileLeg {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: distribute;
+            justify-content: space-between;
+}
+
+.smiley {
+    width: 65px;
+    text-align: center;
+    display: inline-block;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+
+.smileLeg svg {
+    width: 25px;
+    height: 25px;
+}
+
+.smileLeg p {
+    font-size: 10px;
+    width: 65px;
 }
 
 .slick-list, .slick-slide {
@@ -66,6 +117,57 @@ body {
     color: #fff !important;
     background: #000 !important;
     opacity: .7;
+}
+
+.notes .noteInput {
+    margin-top: 30px;
+    clear: both;
+}
+
+.noteInput button:last-of-type {
+    margin-left: 10px;
+}
+
+.notes button:disabled {
+    opacity: .6;
+}
+
+.notes select {
+    width: 130px;
+}
+
+.notes .smiley {
+    text-align: right;
+    width: 140px;
+    float: right;
+    border: 1px solid #000;
+    margin: 20px;
+    padding: 5px;
+}
+
+.notes .smiley p {
+    display: inline-block;
+    vertical-align: bottom;
+    font:  normal 15px 'orbitronregular';
+    margin-right: 10px;
+}
+
+.notes button {
+    display: inline-block;
+    vertical-align: top;
+    height: 30px;
+    background: transparent;
+    padding-top: 3px;
+}
+
+.noteInput input:first-of-type {
+        width: 130px;
+}
+
+.notes input, .notes select {
+    vertical-align: bottom;
+    background: transparent;
+    margin-right: 10px;
 }
 
 .game1 {
@@ -119,7 +221,8 @@ body {
     opacity: .7;
 }
 
-.toDoOuter {
+/* CHANGE FOR NEW BANNER */
+.notes {
     position: relative;
     z-index: 90;
 }
@@ -775,9 +878,9 @@ h3 {
 }
 
 .event-title {
-    font-size: 10px;
+    font-size: 9px;
     font-family: 'Play', sans-serif;
-    padding: 8px 0 0 5px;
+    padding: 8px 0 0 3px;
 }
 
 .resetBox button {
@@ -799,11 +902,11 @@ h3 {
     background: red;
 }
 
-#reset:hover svg {
+#reset:hover .glyphicon-warning-sign {
     color: #fff;
 }
 
-#reset:disabled:hover svg {
+#reset:disabled:hover .glyphicon-warning-sign {
     color: red;
 }
 
@@ -972,7 +1075,7 @@ thead .fc-today {
     color: #f7f7f7;
 }
 
-button svg {
+button .glyphicon-warning-sign {
     vertical-align: middle;
     color: red;
 }

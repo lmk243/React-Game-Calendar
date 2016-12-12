@@ -12,7 +12,7 @@ import Modal from 'react-bootstrap/lib/Modal';
 import Accordion from 'react-bootstrap/lib/Accordion';
 import Panel from 'react-bootstrap/lib/Panel';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import Icon from 'react-geomicons';
+import Icon from 'react-moodycons';
 import {Card, CardImage, Text, Heading } from 'rebass';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ProgressBar from 'react-progress-bar-battlenet-style';
@@ -25,6 +25,9 @@ var myToDo = localStorage.getItem('toDoList')==null ? [] : JSON.parse(localStora
 var myToDo2 = localStorage.getItem('toDoList2')==null ? [] : JSON.parse(localStorage.getItem('toDoList2'));
 var myTitle = localStorage.getItem('listTitle')==null ? [] : JSON.parse(localStorage.getItem('listTitle'));
 var myTitle2 = localStorage.getItem('listTitle2')==null ? [] : JSON.parse(localStorage.getItem('listTitle2'));
+var myNote1 = localStorage.getItem('note1')==null ? [] : JSON.parse(localStorage.getItem('note1'));
+var myNote2 = localStorage.getItem('note2')==null ? [] : JSON.parse(localStorage.getItem('note2'));
+var myNote3 = localStorage.getItem('note3')==null ? [] : JSON.parse(localStorage.getItem('note3'));
 
 var d = new Date();
 
@@ -93,7 +96,7 @@ class Addition extends React.Component {
             <div>
             <Accordion>
             <Panel header="Click to Add an Event" eventKey="1">
-            <div className="inputs">
+            <div className="inputs animated slideInUp">
                     <input type="text" ref="name" className="eventName" placeholder="Event Name (Required)" onChange={this.checkInput} />
                     <label>Start:</label>
                     <DatePicker selected={this.state.start} onChange={this.handleChangeStart} />
@@ -215,7 +218,7 @@ class Favorites extends React.Component {
             <button onClick={this.handleClick} disabled={this.state.disabled} className={this.state.classes}>
                 <Glyphicon glyph="plus" /> Add Favorite
                 </button>
-            <button onClick={this.open} className={this.state.classesList} disabled={this.state.disabledList}><Icon name='warning' /> Delete Favorites</button>
+            <button onClick={this.open} className={this.state.classesList} disabled={this.state.disabledList}><Glyphicon glyph='warning-sign' /> Delete Favorites</button>
             
             <Modal className="resetBox" show={this.state.showModal} bsSize="small" onHide={this.cancel}>          
           <Modal.Body>
@@ -524,7 +527,7 @@ class GameSlider extends React.Component {
                   </Heading>
                   <Text>
                     <u>Platform(s)</u>: PC/XBOX/PS4<br />
-                    <u>Known DLC</u>: New Game +/Level Select
+                    <u>Release Date</u>: Available
                   </Text>
                 </Card>
               </Modal.Body>
@@ -550,7 +553,7 @@ class GameSlider extends React.Component {
                   </Heading>
                   <Text>
                     <u>Platform(s)</u>: XBOX/PS4<br />
-                    <u>Known DLC</u>: N/A
+                    <u>Release Date</u>: Available
                   </Text>
                 </Card>
               </Modal.Body>
@@ -576,7 +579,7 @@ class GameSlider extends React.Component {
                   </Heading>
                   <Text>
                     <u>Platform(s)</u>: PS4<br />
-                    <u>Known DLC</u>: N/A
+                    <u>Release Date</u>: Available
                   </Text>
                 </Card>
               </Modal.Body>
@@ -635,7 +638,7 @@ constructor(props) {
   render() {
     return (
             <div>
-        <button type="button" id="reset" onClick={this.open} disabled={this.state.disabled}><span><Icon name='warning' /> Clear Calendar</span></button>
+        <button type="button" id="reset" onClick={this.open} disabled={this.state.disabled}><span><Glyphicon glyph='warning-sign' /> Clear Calendar</span></button>
         
         
         <Modal className="resetBox" show={this.state.showModal} bsSize="small" onHide={this.cancel}>          
@@ -656,6 +659,285 @@ constructor(props) {
 }
 
 
+class Note1 extends React.Component {
+    
+constructor(props) {
+        super(props);
+    
+    if (localStorage.note1 == undefined) {
+            var makeDisabled = false;
+            var delDisabled = true;
+        } else {
+            var makeDisabled = true;
+            var delDisabled = false;
+        }
+    
+        this.state = {
+               note: myNote1,
+               disableMake: makeDisabled,
+               disableDelete: delDisabled
+            };
+    
+        this.delete = this.delete.bind(this);
+        this.make = this.make.bind(this);
+    
+    }
+    
+    delete() {
+        delete localStorage['note1'];
+        
+        this.setState({
+            disableMake: false,
+            disableDelete: true
+        });
+        
+        window.location.reload();
+      }
+    
+    make() {
+        
+        var text = ReactDOM.findDOMNode(this.refs.text).value; 
+        var header = ReactDOM.findDOMNode(this.refs.header).value; 
+        var feeling = ReactDOM.findDOMNode(this.refs.mood).value; 
+        
+        var arr = this.state.note;
+        
+        arr.push ({
+            title: header,
+            text: text,
+            feel: feeling
+        });
+        
+        localStorage.setItem( 'note1', JSON.stringify(this.state.note));  
+        
+        this.setState({
+            note: arr,
+            disableMake: true,
+            disableDelete: false
+        });
+        
+        ReactDOM.findDOMNode(this.refs.text).value = "";
+        ReactDOM.findDOMNode(this.refs.header).value = "";
+        
+    }
+    
+  render() {
+    return (
+        <div className="noteContain">
+        
+        {this.state.note.map(function(item, index){
+                return <div><h3 key={index}>{item.title}</h3><p>{item.text}</p><div className="smiley"><p>Feeling: </p><Icon name={item.feel} /></div></div>;
+            }, this)}
+        
+            <div className="noteInput">
+                <input ref="header" type="text" placeholder="Heading" />
+                <input ref="text" type="text" placeholder="Note" />
+                <select ref="mood">
+                                <option value="grinning">Excited</option>
+                                <option value="dying">Dying</option>
+                                <option value="heartEyes">Love</option>
+                                <option value="happy">Happy</option>
+                                <option value="relieved">Relieved</option>
+                                <option value="disheartened">Disheartened</option>
+                                <option value="tearDrop">Sad</option>
+                                <option value="angry">Angry</option>
+                                <option value="unhappy">Unhappy</option>
+                                <option value="devastated">Devastated</option>
+                            </select>
+                <button onClick={this.make} disabled={this.state.disableMake}>Create</button>
+                <button onClick={this.delete} disabled={this.state.disableDelete}><Glyphicon glyph='warning-sign' /> Delete</button>
+            </div>
+        </div>
+      );
+    }
+}
+
+class Note2 extends React.Component {
+    
+constructor(props) {
+        super(props);
+    
+    if (localStorage.note2 == undefined) {
+            var makeDisabled = false;
+            var delDisabled = true;
+        } else {
+            var makeDisabled = true;
+            var delDisabled = false;
+        }
+    
+        this.state = {
+               note: myNote2,
+               disableMake: makeDisabled,
+               disableDelete: delDisabled
+            };
+    
+        this.delete = this.delete.bind(this);
+        this.make = this.make.bind(this);
+    
+    }
+    
+    delete() {
+        delete localStorage['note2'];
+        
+        this.setState({
+            disableMake: false,
+            disableDelete: true
+        });
+        
+        window.location.reload();
+      }
+    
+    make() {
+        
+        var text = ReactDOM.findDOMNode(this.refs.text).value; 
+        var header = ReactDOM.findDOMNode(this.refs.header).value; 
+        var feeling = ReactDOM.findDOMNode(this.refs.mood).value; 
+        
+        var arr = this.state.note;
+        
+        arr.push ({
+            title: header,
+            text: text,
+            feel: feeling
+        });
+        
+        localStorage.setItem( 'note2', JSON.stringify(this.state.note));  
+        
+        this.setState({
+            note: arr,
+            disableMake: true,
+            disableDelete: false
+        });
+        
+        ReactDOM.findDOMNode(this.refs.text).value = "";
+        ReactDOM.findDOMNode(this.refs.header).value = "";
+        
+    }
+    
+  render() {
+    return (
+        <div className="noteContain">
+        
+        {this.state.note.map(function(item, index){
+                return <div><h3 key={index}>{item.title}</h3><p>{item.text}</p><div className="smiley"><p>Feeling: </p><Icon name={item.feel} /></div></div>;
+            }, this)}
+        
+            <div className="noteInput">
+                <input ref="header" type="text" placeholder="Heading" />
+                <input ref="text" type="text" placeholder="Note" />
+                <select ref="mood">
+                                <option value="grinning">Excited</option>
+                                <option value="dying">Dying</option>
+                                <option value="heartEyes">Love</option>
+                                <option value="happy">Happy</option>
+                                <option value="relieved">Relieved</option>
+                                <option value="disheartened">Disheartened</option>
+                                <option value="tearDrop">Sad</option>
+                                <option value="angry">Angry</option>
+                                <option value="unhappy">Unhappy</option>
+                                <option value="devastated">Devastated</option>
+                            </select>
+                <button onClick={this.make} disabled={this.state.disableMake}>Create</button>
+                <button onClick={this.delete} disabled={this.state.disableDelete}><Glyphicon glyph='warning-sign' /> Delete</button>
+            </div>
+        </div>
+      );
+    }
+}
+
+class Note3 extends React.Component {
+    
+constructor(props) {
+        super(props);
+    
+    if (localStorage.note3 == undefined) {
+            var makeDisabled = false;
+            var delDisabled = true;
+        } else {
+            var makeDisabled = true;
+            var delDisabled = false;
+        }
+    
+        this.state = {
+               note: myNote3,
+               disableMake: makeDisabled,
+               disableDelete: delDisabled
+            };
+    
+        this.delete = this.delete.bind(this);
+        this.make = this.make.bind(this);
+    
+    }
+    
+    delete() {
+        delete localStorage['note3'];
+        
+        this.setState({
+            disableMake: false,
+            disableDelete: true
+        });
+        
+        window.location.reload();
+      }
+    
+    make() {
+        
+        var text = ReactDOM.findDOMNode(this.refs.text).value; 
+        var header = ReactDOM.findDOMNode(this.refs.header).value; 
+        var feeling = ReactDOM.findDOMNode(this.refs.mood).value; 
+        
+        var arr = this.state.note;
+        
+        arr.push ({
+            title: header,
+            text: text,
+            feel: feeling
+        });
+        
+        localStorage.setItem( 'note3', JSON.stringify(this.state.note));  
+        
+        this.setState({
+            note: arr,
+            disableMake: true,
+            disableDelete: false
+        });
+        
+        ReactDOM.findDOMNode(this.refs.text).value = "";
+        ReactDOM.findDOMNode(this.refs.header).value = "";
+        
+    }
+    
+  render() {
+    return (
+        <div className="noteContain">
+        
+        {this.state.note.map(function(item, index){
+                return <div><h3 key={index}>{item.title}</h3><p>{item.text}</p><div className="smiley"><p>Feeling: </p><Icon name={item.feel} /></div></div>;
+            }, this)}
+        
+            <div className="noteInput">
+                <input ref="header" type="text" placeholder="Heading" />
+                <input ref="text" type="text" placeholder="Note" />
+                <select ref="mood">
+                                <option value="grinning">Excited</option>
+                                <option value="dying">Dying</option>
+                                <option value="heartEyes">Love</option>
+                                <option value="happy">Happy</option>
+                                <option value="relieved">Relieved</option>
+                                <option value="disheartened">Disheartened</option>
+                                <option value="tearDrop">Sad</option>
+                                <option value="angry">Angry</option>
+                                <option value="unhappy">Unhappy</option>
+                                <option value="devastated">Devastated</option>
+                            </select>
+                <button onClick={this.make} disabled={this.state.disableMake}>Create</button>
+                <button onClick={this.delete} disabled={this.state.disableDelete}><Glyphicon glyph='warning-sign' /> Delete</button>
+            </div>
+        </div>
+      );
+    }
+}
+
 class Navbar extends React.Component {
     
 constructor(props) {
@@ -666,7 +948,7 @@ constructor(props) {
         <div className="navBar">
         <div className="inner">
         <Nav bsStyle="pills">
-            <NavItem eventKey={1} href="#features" className="orange">Features/Bugs</NavItem>
+            <NavItem eventKey={1} href="#notes" className="orange">Notes</NavItem>
             <NavItem eventKey={2} href="#nu" className="red">New/Upcoming</NavItem>
             <NavItem eventKey={3} href="#calendar" className="green">Calendar</NavItem>
             <NavItem eventKey={4} href="#stats" className="blue">Statistics</NavItem>
@@ -902,7 +1184,7 @@ constructor(props) {
                     <button disabled={this.state.disabledTitle} onClick={this.handleClickTitle} className={this.state.classesTitle}>Create Title</button>
                 </div>
                     
-                <button onClick={this.open} className={this.state.disabledList} disabled={this.state.disabledList}><Icon name='warning' /> Delete List</button>
+                <button onClick={this.open} className={this.state.disabledList} disabled={this.state.disabledList}><Glyphicon glyph='warning-sign' /> Delete List</button>
         </div>  
             <Modal className="resetBox" show={this.state.showModal} bsSize="small" onHide={this.cancel}>          
                 <Modal.Body>
@@ -1142,7 +1424,7 @@ constructor(props) {
                 </div>
                     
                     
-                <button onClick={this.open} className={this.state.disabledList} disabled={this.state.disabledList}><Icon name='warning' /> Delete List</button>
+                <button onClick={this.open} className={this.state.disabledList} disabled={this.state.disabledList}><Glyphicon glyph='warning-sign' /> Delete List</button>
         </div> 
             <Modal className="resetBox" show={this.state.showModal} bsSize="small" onHide={this.cancel}>          
                 <Modal.Body>
@@ -1169,6 +1451,7 @@ class Features extends React.Component {
             <div className="new">
                 <h3>New Features</h3>
                 <ul>
+                        <li>Notes section <Label bsStyle="success">New</Label></li>
                         <li>New/Upcoming games carousel <Label bsStyle="success">New</Label></li>
                         <li>Added two to do lists with delete and titles <Label bsStyle="success">New</Label></li>
                         <li>Wire favorites into localStorage and delete functionality <Label bsStyle="success">New</Label></li>
@@ -1540,7 +1823,6 @@ class App extends React.Component {
                 <Navbar />
                 <a name="top"></a> 
                 <Intro />
-                <a name="features"></a> 
                 <Features />
                 <a name="nu"></a> 
                 <GameSlider />
@@ -1581,11 +1863,64 @@ class App extends React.Component {
                         <h3>To Do Lists</h3>
                         <p>Keeping track of collectibles or items? Store your thoughts here.  Any entries with the same name will be checked at the same time (NOTE: See bugs log for to do list issues)</p>
                         <div className="toDoLists">
-                        <div className="ribbon-wrapper-color"><div className="ribbon-color">NEW</div></div>
                             <ToDo1 />
                             <ToDo2 />
                         </div>
                     </div>
+                  <a name="notes"></a>       
+                <div className="notes">
+                    <div className="ribbon-wrapper-color"><div className="ribbon-color">NEW</div></div>
+                    <h3>Notes</h3>
+                    <p>Need a place to store your thoughts?  Perhaps a reminder for a DLC or event that has no date yet?  Write it here!</p>
+                    <Note1 />
+                    <Note2 />
+                    <Note3 />
+                    </div>
+                    
+                <div className="smileLeg">
+                        
+                    <div className="smiley">
+                        <Icon name="grinning" /><br />
+                        <p>Excited</p>
+                    </div>
+                    <div className="smiley">
+                        <Icon name="dying" /><br />
+                        <p>Dying</p>
+                    </div>
+                    <div className="smiley">
+                        <Icon name="heartEyes" /><br />
+                        <p>Love</p>
+                    </div>
+                    <div className="smiley">
+                        <Icon name="happy" /><br />
+                        <p>Happy</p>
+                    </div>
+                    <div className="smiley">
+                        <Icon name="relieved" /><br />
+                        <p>Relieved</p>
+                    </div>
+                    <div className="smiley">
+                        <Icon name="disheartened" /><br />
+                        <p>Disheartened</p>
+                    </div>
+                    <div className="smiley">
+                        <Icon name="tearDrop" /><br />
+                        <p>Sad</p>
+                    </div>
+                    <div className="smiley">
+                        <Icon name="angry" /><br />
+                        <p>Angry</p>
+                    </div>
+                    <div className="smiley">
+                        <Icon name="unhappy" /><br />
+                        <p>Unhappy</p>
+                    </div>
+                    <div className="smiley">
+                        <Icon name="devastated" /><br />
+                        <p>Devastated</p>
+                    </div>
+                        
+                </div>
                 <Reset />
             </div>
         );
