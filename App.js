@@ -730,9 +730,10 @@ constructor(props) {
             }, this)}
         
             <div className="noteInput">
-                <input ref="header" type="text" placeholder="Heading" />
-                <input ref="text" type="text" placeholder="Note" />
-                <select ref="mood">
+                <div className="instructNote" disabled={this.state.disableMake}><p>Create a new note using the form below</p></div>
+                <input ref="header" type="text" disabled={this.state.disableMake} placeholder="Heading" />
+                <input ref="text" type="text" disabled={this.state.disableMake} placeholder="Note" />
+                <select ref="mood" disabled={this.state.disableMake}>
                                 <option value="grinning">Excited</option>
                                 <option value="dying">Dying</option>
                                 <option value="heartEyes">Love</option>
@@ -751,6 +752,7 @@ constructor(props) {
       );
     }
 }
+
 
 class Note2 extends React.Component {
     
@@ -823,9 +825,10 @@ constructor(props) {
             }, this)}
         
             <div className="noteInput">
-                <input ref="header" type="text" placeholder="Heading" />
-                <input ref="text" type="text" placeholder="Note" />
-                <select ref="mood">
+                <div className="instructNote" disabled={this.state.disableMake}><p>Create a new note using the form below</p></div>
+                <input ref="header" type="text" disabled={this.state.disableMake} placeholder="Heading" />
+                <input ref="text" type="text" disabled={this.state.disableMake} placeholder="Note" />
+                <select ref="mood" disabled={this.state.disableMake}>
                                 <option value="grinning">Excited</option>
                                 <option value="dying">Dying</option>
                                 <option value="heartEyes">Love</option>
@@ -844,6 +847,7 @@ constructor(props) {
       );
     }
 }
+
 
 class Note3 extends React.Component {
     
@@ -916,9 +920,10 @@ constructor(props) {
             }, this)}
         
             <div className="noteInput">
-                <input ref="header" type="text" placeholder="Heading" />
-                <input ref="text" type="text" placeholder="Note" />
-                <select ref="mood">
+                <div className="instructNote" disabled={this.state.disableMake}><p>Create a new note using the form below</p></div>
+                <input ref="header" type="text" disabled={this.state.disableMake} placeholder="Heading" />
+                <input ref="text" type="text" disabled={this.state.disableMake} placeholder="Note" />
+                <select ref="mood" disabled={this.state.disableMake}>
                                 <option value="grinning">Excited</option>
                                 <option value="dying">Dying</option>
                                 <option value="heartEyes">Love</option>
@@ -937,6 +942,7 @@ constructor(props) {
       );
     }
 }
+
 
 class Navbar extends React.Component {
     
