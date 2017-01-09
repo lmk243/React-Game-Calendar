@@ -644,7 +644,7 @@ constructor(props) {
         <Modal className="resetBox" show={this.state.showModal} bsSize="small" onHide={this.cancel}>          
           <Modal.Body>
             <p className="modalText">
-                Are you sure you wish to clear your calendar?
+                Are you sure you wish to clear your calendar?  This will also clear your statistics.
             </p>
           </Modal.Body>
           <Modal.Footer>
@@ -1640,6 +1640,7 @@ class App extends React.Component {
             total: totCount,
             avatarClass: 'eventAvatar',
             showPopover: false,
+            linkState: 'links closed first',
             showModal: false,
             showModal2: false,
             overlayTitle: null,
@@ -1662,6 +1663,7 @@ class App extends React.Component {
         this.close = this.close.bind(this);
         this.open2 = this.open2.bind(this);
         this.close2 = this.close2.bind(this);
+        this.openLinks = this.openLinks.bind(this);
     }
     
     handleEventMouseOver(target, eventData, day) {
@@ -1752,6 +1754,20 @@ class App extends React.Component {
         
     }
     
+    openLinks() {
+        if((this.state.linkState == 'links closed') || (this.state.linkState == 'links closed first')) {
+            this.setState({
+            linkState: 'links open'
+        });
+        }
+        
+        if(this.state.linkState == 'links open') {
+            this.setState({
+            linkState: 'links closed'
+        });
+        }
+    }
+    
     nextMonth() {
         
         var nextMonth = this.state.month + 1;
@@ -1827,6 +1843,28 @@ class App extends React.Component {
                 </Overlay>
                             
                 <Navbar />
+                                
+                <div className={this.state.linkState}  onClick={this.openLinks}>
+                   
+                <h4 className="linkTab">Links</h4>
+                    
+                <div className="linkBox">
+                
+                    <p><strong>ESO</strong></p>
+                    <ul>
+                        <li><a href="http://www.elderscrollsonline.com/en-us/news" target="_blank">News</a></li>
+                        <li><a href="https://forums.elderscrollsonline.com/en" target="_blank">Forum</a></li>
+                    </ul>
+                    <p><strong>Smite</strong></p>
+                    <ul>
+                        <li><a href="https://www.smitegame.com/" target="_blank">Main Site</a></li>
+                        <li><a href="https://www.smitegame.com/category/patch-notes/" target="_blank">Patch Notes</a></li>
+                        <li><a href="https://www.reddit.com/r/Smite/" target="_blank">Reddit</a></li>
+                    </ul>
+                </div>
+                
+                </div>
+                                
                 <a name="top"></a> 
                 <Intro />
                 <Features />
@@ -1864,8 +1902,9 @@ class App extends React.Component {
                 <Addition events={this.state.list} addEventHandler={this.addEvent} />
                 <a name="favorites"></a> 
                 <Favorites />
-                    <a name="todos"></a> 
+                    
                     <div className="toDoOuter">
+                        <a name="todos"></a> 
                         <h3>To Do Lists</h3>
                         <p>Keeping track of collectibles or items? Store your thoughts here.  Any entries with the same name will be checked at the same time (NOTE: See bugs log for to do list issues)</p>
                         <div className="toDoLists">
@@ -1877,7 +1916,7 @@ class App extends React.Component {
                 <div className="notes">
                     <div className="ribbon-wrapper-color"><div className="ribbon-color">NEW</div></div>
                     <h3>Notes</h3>
-                    <p>Need a place to store your thoughts?  Perhaps a reminder for a DLC or event that has no date yet?  Write it here!</p>
+                    <p>Need a place to store your thoughts?  Perhaps a reminder for a DLC or event that has no date yet?  Write it here!  Currently limited to 3 notes.</p>
                     <hr />
                     <Note1 />
                     <hr />
