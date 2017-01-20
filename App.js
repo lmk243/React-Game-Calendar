@@ -1098,16 +1098,26 @@ constructor(props) {
         
         var arr = this.state.list;
         
+        if(document.getElementById("priority").checked == true) {
+            var priorityLevel = "highPriority";
+        } else {
+            var priorityLevel = "noPriority";
+        }
+        
         arr.push ({
             title: listItem,
-            classes: 'incomplete'
+            classes: 'incomplete',
+            priority: priorityLevel
         });
         
         this.setState({
             list: arr,
+            disabled: true,
             disabledList: false,
             classesList: 'animated rubberBand'
         });
+        
+        document.getElementById("priority").checked = false;
         
         localStorage.setItem( 'toDoList', JSON.stringify(this.state.list));  
         
@@ -1169,7 +1179,7 @@ constructor(props) {
         <h4>{this.state.title}</h4>
         <div className="list">
             {this.state.list.map(function(item, index){
-                return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}</p>;
+                return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}<span className={item.priority}></span></p>;
             }, this)}
     </div>
     <div className="bottom">
@@ -1185,6 +1195,11 @@ constructor(props) {
                     </button>
                   
             </div>  
+                    
+                    <div className="priorityCheck">
+                    <input id="priority" type="checkbox" name="priority" value="first" className={this.state.classes} disabled={this.state.disabled} /> First priority ⚝
+                        </div>
+                    
                 <div className="createTitle">
                     <input type="text" ref="title" className="" onChange={this.checkInputTitle} placeholder="List Title" />
                     <button disabled={this.state.disabledTitle} onClick={this.handleClickTitle} className={this.state.classesTitle}>Create Title</button>
@@ -1335,16 +1350,26 @@ constructor(props) {
         
         var arr = this.state.list;
         
+        if(document.getElementById("priority2").checked == true) {
+            var priorityLevel = "highPriority";
+        } else {
+            var priorityLevel = "noPriority";
+        }
+        
         arr.push ({
             title: listItem,
-            classes: 'incomplete'
+            classes: 'incomplete',
+            priority: priorityLevel
         });
         
         this.setState({
             list: arr,
+            disabled: true,
             disabledList: false,
             classesList: 'animated rubberBand'
         });
+        
+        document.getElementById("priority2").checked = false;
         
         localStorage.setItem( 'toDoList2', JSON.stringify(this.state.list));  
         
@@ -1407,7 +1432,7 @@ constructor(props) {
         <h4>{this.state.title}</h4>
             <div className="list">
         {this.state.list.map(function(item, index){
-                return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}</p>;
+                return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}<span className={item.priority}></span></p>;
             }, this)}
         </div>
     <div className="bottom">    
@@ -1424,11 +1449,14 @@ constructor(props) {
                   
             </div>  
                     
+                    <div className="priorityCheck">
+                    <input id="priority2" type="checkbox" name="priority" value="first" disabled={this.state.disabled} className={this.state.classes} /> First priority ⚝
+                        </div>
+                    
                 <div className="createTitle">
                     <input type="text" ref="title2" className="" onChange={this.checkInputTitle} placeholder="List Title" />
                     <button disabled={this.state.disabledTitle} onClick={this.handleClickTitle} className={this.state.classesTitle}>Create Title</button>
                 </div>
-                    
                     
                 <button onClick={this.open} className={this.state.disabledList} disabled={this.state.disabledList}><Glyphicon glyph='warning-sign' /> Delete List</button>
         </div> 
