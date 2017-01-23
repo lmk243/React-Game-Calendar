@@ -479,6 +479,10 @@ body {
     color: #333;
 }
 
+.completed {
+    opacity: .5;
+}
+
 .incomplete, .completed {
     text-align: left;
     font-family: 'orbitronregular';
@@ -1365,6 +1369,10 @@ input {
     margin: 0;
     vertical-align: middle;
     border: 1px solid black;
+}
+
+.list div p {
+    display: inline-block;
 }
 
 .priorityCheck {

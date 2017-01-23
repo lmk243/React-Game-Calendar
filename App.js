@@ -1050,10 +1050,12 @@ constructor(props) {
             if(myToDo[i].title == e.target.innerHTML){
                 if(e.target.className == "incomplete") {
                     var tempTitle = myToDo[i].title;
+                    var tempPriority = myToDo[i].priority;
                     var newList = myToDo.slice();
                     newList.splice (i, 1, {
                         title: tempTitle,
-                        classes: 'completed'
+                        classes: 'completed',
+                        priority: tempPriority
                     });
                     this.setState({list: newList});
                     localStorage.setItem( 'toDoList', JSON.stringify(newList));
@@ -1062,10 +1064,12 @@ constructor(props) {
                 
                 if(e.target.className == "completed") {
                     var tempTitle = myToDo[i].title;
+                    var tempPriority = myToDo[i].priority;
                     var newList = myToDo.slice();
                     newList.splice (i, 1, {
                         title: tempTitle,
-                        classes: 'incomplete'
+                        classes: 'incomplete',
+                        priority: tempPriority
                     });
                     this.setState({list: newList});
                     localStorage.setItem( 'toDoList', JSON.stringify(newList));
@@ -1179,7 +1183,7 @@ constructor(props) {
         <h4>{this.state.title}</h4>
         <div className="list">
             {this.state.list.map(function(item, index){
-                return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}<span className={item.priority}></span></p>;
+                return <div><p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}</p><span className={item.priority}></span></div>;
             }, this)}
     </div>
     <div className="bottom">
@@ -1303,10 +1307,12 @@ constructor(props) {
             if(myToDo2[i].title == e.target.innerHTML){
                 if(e.target.className == "incomplete") {
                     var tempTitle = myToDo2[i].title;
+                    var tempPriority = myToDo2[i].priority;
                     var newList = myToDo2.slice();
                     newList.splice (i, 1, {
                         title: tempTitle,
-                        classes: 'completed'
+                        classes: 'completed',
+                        priority: tempPriority
                     });
                     this.setState({list: newList});
                     localStorage.setItem( 'toDoList2', JSON.stringify(newList));
@@ -1315,10 +1321,12 @@ constructor(props) {
                 
                 if(e.target.className == "completed") {
                     var tempTitle = myToDo2[i].title;
+                    var tempPriority = myToDo2[i].priority;
                     var newList = myToDo2.slice();
                     newList.splice (i, 1, {
                         title: tempTitle,
-                        classes: 'incomplete'
+                        classes: 'incomplete',
+                        priority: tempPriority
                     });
                     this.setState({list: newList});
                     localStorage.setItem( 'toDoList2', JSON.stringify(newList));
@@ -1432,7 +1440,7 @@ constructor(props) {
         <h4>{this.state.title}</h4>
             <div className="list">
         {this.state.list.map(function(item, index){
-                return <p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}<span className={item.priority}></span></p>;
+                return <div><p key={index} onClick={this.check} className={item.classes} ref={item.title}>{item.title}</p><span className={item.priority}></span></div>;
             }, this)}
         </div>
     <div className="bottom">    
@@ -1934,7 +1942,7 @@ class App extends React.Component {
                     <div className="toDoOuter">
                         <a name="todos"></a> 
                         <h3>To Do Lists</h3>
-                        <p>Keeping track of collectibles or items? Store your thoughts here.  Any entries with the same name will be checked at the same time (NOTE: See bugs log for to do list issues)</p>
+                        <p>Keeping track of collectibles or items? Store your thoughts here.  Any entries with the same name will be checked at the same time (NOTE: See bugs log for to do list issues)  Check the priority box to add a red star to goals that take precedence.</p>
                         <div className="toDoLists">
                             <ToDo1 />
                             <ToDo2 />
