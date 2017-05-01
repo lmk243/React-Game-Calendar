@@ -7,6 +7,26 @@
     font-style: normal;
 }
 
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #c2c2c2;
+}
+
+::-webkit-scrollbar
+{
+	width: 20px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 3px solid #000000;
+    background-image:  -webkit-linear-gradient(top, #a83d12 0%, #4b1b08 25%, #000000 25.5%, #000000 26%, #7c0707 27%, #370303 50%, #000000 50.5%, #000000 51%, #071a45 52%, #030c1f 75%, #000000 75.5%, #000000 76%, #2d4d1e 77%, #14220d 100%);
+}
+
 body {
     background-image: url(img/calendar-bg.png);
     background-position: top left;
@@ -21,10 +41,77 @@ body {
     }
 }
 
-.intro, .features, .monthInfo, .flexContainer, .legend, .faveForm, .toDoOuter, .slider, .notes, .smileLeg {
-    background: rgba(255,255,255,.7);
+.intro, .features, .monthInfo, .flexContainer, .legend, .faveForm, .toDoOuter, .slider, .notes, .colors, .smileLeg {
     margin-top: 20px;
     padding: 15px;
+}
+
+.colors {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    font:  normal 15px 'orbitronregular';
+    z-index: 99999999;
+}
+
+.colors p {
+    color: white;
+}
+
+#colorDrop {
+    color: black !important;
+    width: 160px;
+    float: right;
+}
+
+.themeColorDef, .themeColorDef .navBar, .themeColorDef .linkTab, .themeColorDef .linkBox {
+    background-color: rgba(255,255,255,.7);
+}
+
+
+.themeColor1 input, .themeColor2 input, .themeColor3 input, .themeColor4 input, .themeColor1 p, .themeColor2 p, .themeColor3 p, .themeColor4 p, .themeColor1 a, .themeColor2 a, .themeColor3 a, .themeColor4 a, .themeColor1 button, .themeColor2 button, .themeColor3 button, .themeColor4 button, .themeColor1 select, .themeColor2 select, .themeColor3 select, .themeColor4 select {
+    color: white !important;
+}
+
+.themeColor1 ::-webkit-input-placeholder, .themeColor2 ::-webkit-input-placeholder, .themeColor3 ::-webkit-input-placeholder, .themeColor4 ::-webkit-input-placeholder {
+    color: white !important;
+}
+
+.themeColor1 ::-moz-placeholder, .themeColor2 ::-moz-placeholder, .themeColor3 ::-moz-placeholder, .themeColor4 ::-moz-placeholder { 
+    color: white !important;
+}
+
+.themeColor1 :-moz-placeholder, .themeColor2 :-moz-placeholder, .themeColor3 :-moz-placeholder, .themeColor4 :-moz-placeholder { 
+    color: white !important;
+}
+
+.themeColor1, .themeColor1 .navBar, .themeColor1 .linkTab, .themeColor1 .linkBox {
+    background-color: rgba(155, 7, 7,.7);
+    color: white !important;
+}
+
+.themeColor2, .themeColor2 .navBar, .themeColor2 .linkTab, .themeColor2 .linkBox {
+    background-color: rgba(209, 75, 23,.7);
+    color: white !important;
+}
+
+.themeColor3, .themeColor3 .navBar, .themeColor3 .linkTab, .themeColor3 .linkBox {
+    background-color: rgba(56, 94, 37,.7);
+    color: white !important;
+}
+
+.themeColor4, .themeColor4 .navBar, .themeColor4 .linkTab, .themeColor4 .linkBox {
+    background-color: rgba(13, 45, 114,.7);
+    color: white !important;
+}
+
+.panel, .panel-default>.panel-heading {
+    background-color: transparent;
+    color: black;
+}
+
+.nav>li>a {
+    transition: all 1s;
 }
 
 .links {
@@ -289,22 +376,26 @@ body {
 .game1 {
     width: 720px;
     height: 100%;
-    background: url(img/dishonored.jpg) center no-repeat;
+    background: url(img/Tekken-7.jpg) 0 -60px no-repeat;
     background-size: 100%;
 }
 
 .game2 {
     width: 720px;
     height: 100%;
-    background: url(img/Final-Fantasy-XV.jpg) center no-repeat;
+    background: url(img/Crash-Bandicoot.jpg) center no-repeat;
     background-size: 100%;
 }
 
 .game3{
     width: 720px;
     height: 100%;
-    background: url(img/last-guardian.jpg) top center no-repeat;
+    background: url(img/ESO-morrowind.jpg) top center no-repeat;
     background-size: 100%;
+}
+
+.game {
+    cursor: pointer;
 }
 
 .game span {
@@ -471,12 +562,10 @@ body {
 
 .completed::before {
     content: '☑  ';
-    color: #333;
 }
 
 .incomplete::before {
     content: '☐  ';
-    color: #333;
 }
 
 .completed {
@@ -583,9 +672,13 @@ body {
 }
 
 .ReactTabs__TabPanel {
-    background: rgba(255,255,255,.7);
+    background: rgba(255,255,255,.3);
     padding: 15px;
     overflow: hidden;
+}
+
+#react-tabs-5 {
+    padding: 15px 15px 7px;
 }
 
 .react-tabs [role=tablist] {
@@ -595,7 +688,7 @@ body {
 }
 
 .react-tabs [role=tab][aria-selected=true] {
-    background: rgba(255,255,255,.7);
+    background: rgba(255,255,255,.3);
     border-bottom: 1px solid black;
     color: #333;
 }
@@ -607,7 +700,6 @@ body {
 .eventsCount {
     font-size: 18px;
     font-family: 'orbitronregular';
-    font-weight: bold;
 }
 
 .flexContainer {
@@ -716,19 +808,16 @@ body {
 }
 
 .Summary ul li:nth-child(4n+1) {  
-    font-weight: bold;
     font-size: 20px;
     font-family: 'orbitronregular';
 }
 
 .Summary ul li:nth-child(4n-2) {  
     font-style: italic;
-    font-weight: bold;   
     font-size: 13px;
 }
 
 .Summary ul li:nth-child(4n-1) {  
-    font-weight: bold;   
     font-size: 12px;
 }
 
@@ -962,9 +1051,12 @@ h3 {
 
 .intro h1 {
     font-family: 'orbitronregular';
-    color: rgba(255, 255, 255, .7);
     -webkit-text-stroke: 1px black;
     letter-spacing: 3px;
+    background-color: rgba(255,255,255,.7);
+    padding: 10px;
+    color: rgba(255,255,255,.7);
+    border-radius: 20px;
     
 }
 
@@ -1050,6 +1142,8 @@ h3 {
 .modal-content {
     border-radius: 0px;
     text-align: center;
+    margin-top: 150px;
+    
 }
 
 .modal-footer {
@@ -1312,6 +1406,10 @@ select {
     max-width: 750px;
 }
 
+.inputs input, .inputs select {
+    background: transparent;
+}
+
 .inputs p {
     font-family: 'Play', sans-serif;
     margin-bottom: 0;
@@ -1411,7 +1509,6 @@ input {
     z-index: 99999999;
     left: 0;
     top: 0;
-    background: #c2c2c2;
     text-align: center;
 }
 
@@ -1440,9 +1537,10 @@ input {
     color: #a83d12;
 }
 
-.orange:hover {
-   background: #a83d12; !important;
+.orange a:hover {
+   background: #a83d12 !important;
     opacity: .7 !important;
+    color: white !important;
     text-decoration: underline !important;
 }
 
@@ -1450,9 +1548,10 @@ input {
     color: #7c0707;
 }
 
-.red:hover {
+.red a:hover {
    background: #7c0707 !important;
     opacity: .7 !important;
+    color: white !important;
     text-decoration: underline !important;
 }
 
@@ -1460,9 +1559,10 @@ input {
     color: #2d4d1e;
 }
 
-.green:hover {
+.green a:hover {
    background: #2d4d1e !important;
     opacity: .7 !important;
+    color: white !important;
     text-decoration: underline !important;
 }
 
@@ -1470,9 +1570,10 @@ input {
     color: #071a45;
 }
 
-.blue:hover {
+.blue a:hover {
    background: #071a45 !important;
     opacity: .7 !important;
+    color: white !important;
     text-decoration: underline !important;
 }
 
@@ -1497,9 +1598,10 @@ button:hover {
 }
 
 button:disabled {
-    background: #F5F5F5;
-    color: #e0dede;
-    border: 1px solid #e0dede;
+    background: #a8a8a8;
+    color: #333;
+    opacity: .4;
+    border: 1px solid #333;
 }
 
 .progress__text {

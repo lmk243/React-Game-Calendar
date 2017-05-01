@@ -28,6 +28,7 @@ var myTitle2 = localStorage.getItem('listTitle2')==null ? [] : JSON.parse(localS
 var myNote1 = localStorage.getItem('note1')==null ? [] : JSON.parse(localStorage.getItem('note1'));
 var myNote2 = localStorage.getItem('note2')==null ? [] : JSON.parse(localStorage.getItem('note2'));
 var myNote3 = localStorage.getItem('note3')==null ? [] : JSON.parse(localStorage.getItem('note3'));
+var themeColor = localStorage.getItem('theme')==null ? ['themeColorDef'] : JSON.parse(localStorage.getItem('theme'));
 
 var d = new Date();
 
@@ -517,17 +518,17 @@ class GameSlider extends React.Component {
                   width={256}
                 >
                  <div className="cardContainer">
-                     <CardImage src="img/dishonored.jpg" />
+                     <CardImage src="img/tekken-7.jpg" />
                 </div>
                   <Heading
                     level={2}
                     size={3}
                   >
-                    Dishonored 2
+                    Tekken 7
                   </Heading>
                   <Text>
-                    <u>Platform(s)</u>: PC/XBOX/PS4<br />
-                    <u>Release Date</u>: Available
+                    <u>Platform(s)</u>: PS4/Xbox/PC<br />
+                    <u>Release Date</u>: June 2, 2017
                   </Text>
                 </Card>
               </Modal.Body>
@@ -543,17 +544,17 @@ class GameSlider extends React.Component {
                   width={256}
                 >
                  <div className="cardContainer">
-                     <CardImage src="img/Final-Fantasy-XV.jpg" />
+                     <CardImage src="img/Crash-Bandicoot.jpg" />
                 </div>
                   <Heading
                     level={2}
                     size={3}
                   >
-                    Final Fantasy XV
+                    Crash Bandicoot Remastered
                   </Heading>
                   <Text>
-                    <u>Platform(s)</u>: XBOX/PS4<br />
-                    <u>Release Date</u>: Available
+                    <u>Platform(s)</u>: PS4<br />
+                    <u>Release Date</u>: June 30, 2017
                   </Text>
                 </Card>
               </Modal.Body>
@@ -569,17 +570,17 @@ class GameSlider extends React.Component {
                   width={256}
                 >
                  <div className="cardContainer">
-                     <CardImage src="img/last-guardian.jpg" />
+                     <CardImage src="img/ESO-morrowind.jpg" />
                 </div>
                   <Heading
                     level={2}
                     size={3}
                   >
-                    The Last Guardian
+                    ESO: Morrowind
                   </Heading>
                   <Text>
-                    <u>Platform(s)</u>: PS4<br />
-                    <u>Release Date</u>: Available
+                    <u>Platform(s)</u>: PC/XBOX/PS4<br />
+                    <u>Release Date</u>: June 6, 2017
                   </Text>
                 </Card>
               </Modal.Body>
@@ -590,9 +591,9 @@ class GameSlider extends React.Component {
             
         <span className="stitle">New and Upcoming Titles</span>
         <Slider {...settings}>
-        <div><div className="game game1" onClick={this.open}><span>Dishonored 2</span></div></div>
-        <div><div className="game game2" onClick={this.open2}><span>Final Fantasy XV</span></div></div>
-        <div><div className="game game3" onClick={this.open3}><span>The Last Guardian</span></div></div>
+        <div><div className="game game1" onClick={this.open}><span>Tekken 7</span></div></div>
+        <div><div className="game game2" onClick={this.open2}><span>Crash Bandicoot Remastered</span></div></div>
+        <div><div className="game game3" onClick={this.open3}><span>ESO: Morrowind</span></div></div>
       </Slider>
             </div>
         );
@@ -1683,6 +1684,7 @@ class App extends React.Component {
             overlayDesc: null,
             overlayImg: null,
             popoverTarget: null,
+            color: themeColor,
             list: myStorage,
             month: Number(d.getMonth()),
             year: d.getFullYear(),
@@ -1700,6 +1702,7 @@ class App extends React.Component {
         this.open2 = this.open2.bind(this);
         this.close2 = this.close2.bind(this);
         this.openLinks = this.openLinks.bind(this);
+        this.checkInputColor = this.checkInputColor.bind(this);
     }
     
     handleEventMouseOver(target, eventData, day) {
@@ -1721,6 +1724,32 @@ class App extends React.Component {
         }
     }
 
+    checkInputColor(e) {
+        delete localStorage['theme'];
+        
+        if(e.target.value == 'default') {
+            var newColor = 'themeColorDef';
+        }
+        if(e.target.value == 'red') {
+            var newColor = 'themeColor1';
+        }
+        if(e.target.value == 'orange') {
+            var newColor = 'themeColor2';
+        }
+        if(e.target.value == 'green') {
+            var newColor = 'themeColor3';
+        }
+        if(e.target.value == 'blue') {
+            var newColor = 'themeColor4';
+        }
+        
+        this.setState({
+            color: newColor
+        });
+        
+        localStorage.setItem( 'theme', JSON.stringify(newColor));  
+    }
+    
     handleEventMouseOut(target, eventData, day) {
         this.setState({
             showPopover: false,
@@ -1877,21 +1906,24 @@ class App extends React.Component {
                     </div>
                     </Popover>
                 </Overlay>
-                            
+                 
+                <div className={this.state.color}>
                 <Navbar />
-                                
+                </div>            
+                    
+                <div className={this.state.color}>
                 <div className={this.state.linkState}  onClick={this.openLinks}>
                    
                 <h4 className="linkTab">Links</h4>
                     
                 <div className="linkBox">
                 
-                    <p><strong>ESO</strong></p>
+                    <p>ESO</p>
                     <ul>
                         <li><a href="http://www.elderscrollsonline.com/en-us/news" target="_blank">News</a></li>
                         <li><a href="https://forums.elderscrollsonline.com/en" target="_blank">Forum</a></li>
                     </ul>
-                    <p><strong>Smite</strong></p>
+                    <p>Smite</p>
                     <ul>
                         <li><a href="https://www.smitegame.com/" target="_blank">Main Site</a></li>
                         <li><a href="https://www.smitegame.com/category/patch-notes/" target="_blank">Patch Notes</a></li>
@@ -1900,20 +1932,56 @@ class App extends React.Component {
                 </div>
                 
                 </div>
+                        
+                </div>
                                 
                 <a name="top"></a> 
+                <div className={this.state.color}>
                 <Intro />
+                </div>
+                
+                <div className={this.state.color}>
+                    <div className="colors">
+                        <p>Choose a theme color: </p>
+                        <select id="colorDrop" onChange={this.checkInputColor}>
+                            <option value="0" >Color</option>
+                            <option value="default" className="themeColorDef">Default Grey</option>
+                            <option value="red" className="themeColor1">Mobile Red</option>
+                            <option value="orange" className="themeColor2">PC Orange</option>
+                            <option value="green" className="themeColor3">Xbox Green</option>
+                            <option value="blue" className="themeColor4">Playstation Blue</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div className={this.state.color}>
                 <Features />
+                </div>
+                
+                
                 <a name="nu"></a> 
+                
+                <div className={this.state.color}>
                 <GameSlider />
+                </div>
+                
                 <a name="calendar"></a> 
+                
+                <div className={this.state.color}>
                 <div className="monthInfo">
                     <h2>{this.state.header}</h2>
                     <Month month={this.state.month} switchHandler={this.switchEvent} nextHandler={this.nextMonth} prevHandler={this.prevMonth} />
                 </div>
+                    
                 <EventCalendar month={this.state.month} year={this.state.year} events={this.state.list} onEventClick={this.onEventClick} onEventMouseOver={this.handleEventMouseOver} onEventMouseOut={this.handleEventMouseOut} />
+                </div>
+                
+                <div className={this.state.color}>
                 <Legend />
+                </div>
+                
                     <a name="stats"></a> 
+                    <div className={this.state.color}>
                     <Tabs>
 					<TabList>
                         <Tab>Upcoming Events</Tab>
@@ -1934,11 +2002,19 @@ class App extends React.Component {
 						<Summary />
 					</TabPanel>					
 				</Tabs>
+                </div>
                 
+                <div className={this.state.color}>
                 <Addition events={this.state.list} addEventHandler={this.addEvent} />
+                </div>
+                
                 <a name="favorites"></a> 
+                
+                <div className={this.state.color}>
                 <Favorites />
+                </div>
                     
+                <div className={this.state.color}>
                     <div className="toDoOuter">
                         <a name="todos"></a> 
                         <h3>To Do Lists</h3>
@@ -1947,8 +2023,12 @@ class App extends React.Component {
                             <ToDo1 />
                             <ToDo2 />
                         </div>
+                        </div>
                     </div>
-                  <a name="notes"></a>       
+                        
+                  <a name="notes"></a>  
+                  
+                <div className={this.state.color}>
                 <div className="notes">
                     <div className="ribbon-wrapper-color"><div className="ribbon-color">NEW</div></div>
                     <h3>Notes</h3>
@@ -1960,7 +2040,9 @@ class App extends React.Component {
                     <hr />
                     <Note3 />
                     </div>
-                    
+                    </div>
+                
+                <div className={this.state.color}>
                 <div className="smileLeg">
                         
                     <div className="smiley">
@@ -2005,6 +2087,8 @@ class App extends React.Component {
                     </div>
                         
                 </div>
+                    </div>
+                    
                 <Reset />
             </div>
         );
